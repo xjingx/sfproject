@@ -66,14 +66,14 @@
           <el-option label="物电学院" value="物电学院"></el-option>
           </el-select>
         </el-col>
-        <el-col :span="5">
+        <!-- <el-col :span="5">
           <el-input
             placeholder="请设置密码"
             v-model="addUser.addpw"
             clearable>
             <template slot="prepend">密码</template>
           </el-input>
-        </el-col>
+        </el-col> -->
       </el-row>
       <el-row :gutter="20">
         <el-col :span="6">
@@ -136,11 +136,11 @@
           label="电话"
           width="150">
         </el-table-column>
-        <el-table-column
+        <!-- <el-table-column
           prop="addpw"
           label="密码"
           width="100">
-        </el-table-column>
+        </el-table-column> -->
         <el-table-column
       fixed="right"
       label="操作"
@@ -209,7 +209,7 @@ export default {
         addsnumber:'',//学号
         addidnumber:'',//身份证号
         adddepart:'',//学院
-        addpw:''//密码
+        //addpw:''密码
       },
       tableData: [{ //以下是固定的表格demo，之后可以取消
         addname:'李海铭',
@@ -220,7 +220,7 @@ export default {
         addsnumber:'2017110321',
         addidnumber:'510****************',
         adddepart:'',
-        addpw:'123456'
+        //addpw:'123456'
       }],
       dialogVisible: false, //编辑弹框显示
       editUser:{ //编辑学生部分信息没有做全部
@@ -268,13 +268,13 @@ export default {
         });
         return;
       }
-      if(!this.addUser.addpw){
-        this.$message({
-          message: '请设置密码',
-          type: 'warning'
-        });
-        return;
-      }
+      // if(!this.addUser.addpw){
+      //   this.$message({
+      //     message: '请设置密码',
+      //     type: 'warning'
+      //   });
+      //   return;
+      // }
       if(!this.addUser.adddepart){
         this.$message({
           message: '请选择所在学院',
@@ -357,7 +357,7 @@ export default {
         addidnumber:item.addidnumber,
         addmajor:item.addmajor,
         adddepart:item.adddepart,
-        addpw:item.addpw,
+        //addpw:item.addpw,
         addsnumber:item.addsnumber
       }
       this.dialogVisible = true
