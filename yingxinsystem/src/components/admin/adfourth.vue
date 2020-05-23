@@ -195,6 +195,7 @@
 <script>
 import Vue from 'vue'
 import { MessageBox } from 'element-ui'
+import axios from 'axios'
 export default {
   name: 'Header',
   data(){
@@ -238,7 +239,7 @@ export default {
     }
   },
   methods:{
-    add(){
+    async add(){
       if(!this.addUser.addname){
         this.$message({
           message: '请输入姓名',
@@ -302,8 +303,28 @@ export default {
         });
         return;
       }
-      this.tableData.push(this.addUser)
-      this.addUser=''
+      await axios({
+        method: 'post',
+        url: '/api/person/insertPerson',
+        data: {
+          snumber: this.addUser.addsnumber,//学号
+          sname: this.addUser.addname,
+          sidnumber: this.addUser.addidnumber,//身份证号
+          stestnumber: this.addUser.addtel,//电话号码
+          sdepartment: this.addUser.adddepart,//学院
+          smajor: this.addUser.addmajor,
+          sbirthday: this.addUser.addbirthday,
+          sgender: this.addUser.addsex,
+        }
+      })
+      .then(res => {
+        console.log("res",res.data.error)
+        if(res.data.error === 0){
+          this.insertUser()
+          this.tableData.push(this.addUser)
+          this.addUser=''
+        }
+      })
     },
     del(idx){
       MessageBox.confirm('此操作将永久删除该表单, 是否继续?', '提示', {
@@ -341,10 +362,27 @@ export default {
       }
       this.dialogVisible = true
     },
-    confirm(){
+    confirm() {
       this.dialogVisible = false
       //this.tableData[this.userIndex] = this.editUser  
       Vue.set(this.tableData,this.userIndex, this.editUser)
+    },
+    async insertUser() {
+      await axios({
+        method: 'post',
+        url: '/api/user/insertUser',
+        data: {
+          snumber: this.addUser.addsnumber,//学号
+          sname: this.addUser.addname,
+          sidnumber: this.addUser.addidnumber,//身份证号
+        }
+      })
+      .then(res => {
+        console.log("res",res.data.error)
+        if(res.data.error === 0){
+          console.log("insert user success", res.data)
+        }
+      })
     }
   }
 }

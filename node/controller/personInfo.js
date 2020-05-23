@@ -21,7 +21,18 @@ changePersonInfo = (snumber, sname, stestnumber, sidnumber, sbirthday) => {
             })
 }
 
+insertPersonInfo = (snumber, sname, sidnumber, stestnumber, sdepartment, smajor, sbirthday, sgender) => {
+  return query($sqlQuery.insertInfoBySnumber, [snumber, sname, sidnumber, stestnumber, sdepartment, smajor, sbirthday, sgender])
+          .catch(e => {
+              console.log('change error', JSON.stringify(e));
+              return {
+                  errmsg: JSON.stringify(e)
+              }
+          })
+}
+
 module.exports = {
   queryPersonInfo,
-  changePersonInfo
+  changePersonInfo,
+  insertPersonInfo
 }
