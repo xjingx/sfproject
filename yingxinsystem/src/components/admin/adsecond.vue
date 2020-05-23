@@ -1,4 +1,7 @@
 <template>
+<div>
+  <h3>查看名单</h3>
+  <el-divider></el-divider>
   <el-table
     :data="tableData5"
     style="width: 100%">
@@ -50,6 +53,7 @@
       </template>
     </el-table-column>
   </el-table>
+</div>
 </template>
 
 <style>
