@@ -15,6 +15,7 @@ let personRouter = require('./routes/person');
 let infoRouter = require('./routes/information');
 let payRouter = require('./routes/pay');
 let checkRouter = require('./routes/checkin');
+let noticeRouter = require('./routes/notice');
 
 // 设置跨域访问
 /*app.use("*", (req, res, next) => {
@@ -59,6 +60,7 @@ app.use('/api/person', personRouter);
 app.use('/api/info', infoRouter);
 app.use('/api/pay', payRouter);
 app.use('/api/check', checkRouter);
+app.use('/api/notice', noticeRouter);
 
 app.use(function (req, res, next) {
   next(createError(404));

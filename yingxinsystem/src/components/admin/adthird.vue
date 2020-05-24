@@ -25,6 +25,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 import E from "wangEditor";
 import "wangeditor/release/wangEditor.min.css";
 // wangEditor配置按钮菜单
@@ -176,8 +177,25 @@ export default {
   methods: {
     //请求应该是写在这里，注意把文章标题写入数据库
     updata() {
-      alert(this.editor.txt.html());//测试期间方便使用
+      this.insertUser()
       this.editor.txt.html(""); //这个的作用是点了提交过后，编辑器的内容变成空
+      this.adruleForm.adtitle = "";
+    },
+    async insertUser() {
+      await axios({
+        method: 'post',
+        url: '/api/notice/insertNotice',
+        data: {
+          ntitle: this.adruleForm.adtitle,
+          ncontent: this.editor.txt.html(),
+        }
+      })
+      .then(res => {
+        console.log("res",res.data.error)
+        if(res.data.error === 0){
+          console.log("insert notice success", res.data)
+        }
+      })
     }
   }
   // watch:{

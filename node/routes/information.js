@@ -11,7 +11,7 @@ router.post('/insertInfo', (req, res, next) => {
       res.json(new SuccessModel())
       return
     }
-    res.json(new ErrorModel('登录失败'))
+    res.json(new ErrorModel('插入失败'))
   })
 })
 
@@ -21,7 +21,7 @@ router.post('/queryInfo', (req, res, next) => {
       res.json(new SuccessModel(data))
       return
     }
-    res.json(new ErrorModel('登录失败'))
+    res.json(new ErrorModel('查找失败失败'))
   })
 })
 
@@ -31,7 +31,7 @@ router.post('/queryMoreInfo', (req, res, next) => {
       res.json(new SuccessModel(data))
       return
     }
-    res.json(new ErrorModel('登录失败'))
+    res.json(new ErrorModel('查找失败'))
   })
 })
 

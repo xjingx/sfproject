@@ -1,6 +1,10 @@
 // 用户相关的CRUD操作
 const user = {
   queryAllInfo: 'select type,sname,title from information',
+  queryContent: 'select ncontent from notice where ntitle = ?',
+  queryAllNotice: 'select ntitle from notice order by ntime desc',
+  queryNotice: 'select * from (select ntitle,ncontent from notice order by ntime desc)as a limit 1',
+  insertNotice: 'insert into notice(ntitle, ncontent) values (?,?)',
   queryBySnumber: 'select snumber,sname,sgender,stestnumber,sidnumber,sdepartment,smajor,sbirthday from students where snumber=? and sname=?',
   login: 'select sname from user where snumber=? and spassword=?',
   insertInfo: 'insert into information(title,type,object,sname,content) values (?,?,?,?,?)',
