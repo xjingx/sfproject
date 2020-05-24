@@ -1,111 +1,58 @@
 <template>
   <div>
-	<el-tabs type="border-card">
-	  <el-tab-pane>
-	    <span slot="label"><i class="el-icon-date"></i> 入住须知</span>
-	    <p>
-			入住须知迎新公告<br /><br />
-			2018-08-06 | | 阅读人数：15514人
-		</p>
-		<div class='setting el-container'>
-			<pre class="font-setting">
-亲爱的新同学：
-				
-欢迎您入住我们共同的生活家园—学生公寓！
-				
-进入公寓后，请您卸下旅途的疲惫，放松身心去感受“家”的温暖和清新。大学生活从公寓起航，我们很高兴能陪伴您共度愉快的大学时光。为了让您尽快熟悉公寓生活，<br>并尽早了解和适应大学生活，请您注意以下事项：
-				
-一、住宿提示
-				
-1、请按照已安排的指定床位住宿，严禁随意更换床位；
-				
-2、请使用自己指定床位上的卧具，发现卧具问题及时报告公寓值班室，不得随意交换或动用其他同学床位上的卧具；
-				
-3、请再次确认是否办理完住宿手续，如果没有，请及时到值班室完结手续；
-				
-4、学生公寓开关门、开关灯时间为：周日至周四：6：20—23：00，周五、周六和节假日：6：20—23：30。(特殊时间段另行通知)。请严格遵守作息时间，严禁晚归。
-				
-二、安全提示
-				
-1、请妥善保管好自己的贵重物品（现金、手机、手提电脑、相机、摄像机等）。寝室钥匙不转借他人，严禁留宿外来人员。
-				
-2、要果断拒绝各类推销，发现此类情况，及时报告公寓值班室。
-				
-3、不要轻信陌生人，提高警惕，小心上当受骗，不要泄露银行卡卡号和密码。
-				
-4、遵守学生公寓管理相关规定，不要存放或使用违章电器，不要私拉乱接线路，注意消防安全。
-				
-三、生活服务
-				
-1、 水电土木及部分电器等维修由后勤集团能源修缮服务中心负责，报修电话为：84761111.也可在网上四川师范大学数字后勤服务大厅进行报修。
-				
-2、学校开水房位置：狮子山校区开水房位于槐园超市对面，成龙校区开水房位于西苑龙湖餐厅后面以及东苑八幢旁边，开放时间为：开水房17:00-22:00（节假日另行通知），另外开水房外设有24小时自助热水器。
-				
-3、公寓内设有洗浴热水系统，需先将一卡通激活、转款；热水系统供水时间段：6:00-8:00（周末延长至9：00）,11:00-13:00,15:00-23:00，报修电话：狮山15882271575，成龙18428301806。公寓寝室内可安装空调，相关事宜可在报到后咨询学生公寓空调租赁服务点（狮子山校区：桃李园超市斜对面；成龙校区：东苑7幢旁空调热水服务点）。
-				
-4、网络端口报修电话为：狮山84761007，成龙84481007
-				
-5、医疗服务电话：校医院电话：狮山84760857，成龙84480120，急救电话：120
-				
-6、报警电话：学生区（狮山84766110，成龙84481110）、保卫处（狮山84761110，成龙84480110） 紧急报警：110
-				
-7、住宿服务单位为后勤集团公寓管理中心，服务电话为：狮山84760702，成龙84481333
-				
-学生公寓管理中心祝您学习进步，生活愉快！
-				
-后勤集团学生公寓管理中心
-			</pre>
-		</div>
-		<div align="center">
-		  <el-button type="primary">已阅读</el-button>
-		</div>
-	  </el-tab-pane>
-	  <el-tab-pane>
-	    <span slot="label"><i class="el-icon-date"></i> 关于学生公寓宽带网络办理问题的通告</span>
-		<h2 align="center">关于学生公寓宽带网络办理问题的通告</h2>
-	    <pre>
-						
-						[四川师范大学迎新专题网]  [手机版本]  [扫描分享]  发布时间：2019年9月6日  查看:325  来源:
-
-各位同学：
-
-        为了给广大同学提供良好的上网服务和更多的上网选择，学校在教学办公区楼宇和部分公共区域建设了免费的WiFi网络（sicnu-1x），学生凭学号登录后可在教学办公区免费上网。在学生公寓，中国电信、中国移动、中国联通三大运营商均具备开通宽带上网业务的条件，学生可根据需求到运营商营业厅自愿选择办理。
-
-        学校没有强制或指定办理任何运营商业务，也没有派任何工作人员和学生志愿者进行业务推销，请广大同学注意，避免被错误引导和上当受骗。
-
-特此通告。
-
- 
-
-																				网络与信息化管理处
-
-																				信息网络服务中心
-
-																				2019年9月6日
-		</pre>
-	  </el-tab-pane>
-	</el-tabs>
+    <h3>查看通知公告</h3>
+    <el-divider></el-divider>
+    <el-tabs type="border-card">
+      <el-tab-pane>
+        <span slot="label">
+          <i class="el-icon-date"></i> 最新公告
+        </span>
+        <div v-html="test"></div>
+      </el-tab-pane>
+      <el-tab-pane>
+        <span slot="label">
+          <i class="el-icon-tickets"></i> 历史公告一览
+        </span>
+        <el-table :data="notice" style="width: 100%">
+          <el-table-column type="index" :index="indexMethod"></el-table-column>
+          <el-table-column prop="notitle" label="标题" width="950"></el-table-column>
+          <el-table-column fixed="right" width="100">
+            <el-button type="primary" icon="el-icon-more" @click="centerDialogVisible = true" circle></el-button>
+          </el-table-column>
+        </el-table>
+		<!-- 这里是弹出框 -->
+        <el-dialog title="详情" :visible.sync="centerDialogVisible" width="50%" center>
+          <div v-html="dialog.dialogmessage"></div>
+          <span slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="centerDialogVisible = false">返回</el-button>
+          </span>
+        </el-dialog>
+      </el-tab-pane>
+    </el-tabs>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'first',
-  data () {
+  data() {
     return {
-      msg: '这里是第二个页面入住须知'
-    }
+      //测试输入HTML看页面能否正常显示之后删掉
+      test:
+        "<p>seize	v.抓住；捉拿；夺；没收<br>interaction	n.相互作用；【航】干扰 互动；交互；交互作用<br>facilitate	v.促进；使容易<br>irrigate v.灌溉；冲洗（伤口或身体部位）<br>severe adj.极为恶劣的；十分严重的；严厉的；苛刻的<br>dramatic	adj.突然的；巨大的；令人吃惊的；激动人心的<br>alleviate	v.减轻；缓解；缓和<br>campaign	n.战役；运动<br>engage	v.啮合；雇用；聘用；吸引住（注意力、兴趣）                                                               <br>insightful adj.有深刻了解的；富有洞察力的<br>perceptive adj.理解力强的；有洞察力的；思维敏捷的；感知的<br>arouse v.激发；引起；唤醒；睡醒<br>sufficient adj.足够的；充足的<br>mentality n.心态；思想状况；思想方法<br>destination n.目的地；终点<br>endeavor n.努力 v.努力<br>distinction n.区别；区分；差别；卓越<br>distinct adj.清晰的；清楚的；明白的；明显的<br>readily adv.欣然地；乐意地；快捷地；轻而易举地<br>fatal adj.致命的；灾难性的；毁灭性的；导致失败的<br>it occurs to sb.“某人想到”<br>trend n.趋势；动向；趋向；动态 v.走向；趋向<br>demonstrate v.演示；证明；说明；示范<br>intently adv.聚精会神地；一心一意地<br>intent n.意图；目的；意向 adj.专注；专心；热切的；专注的<br>diminish v.减少；削弱；减小；贬低<br>guilty adj.感到内疚的；感到惭愧的；犯有罪的；有过失的<br>exaggerate v.夸大；夸张；言过其实&nbsp;<br></p>",
+      notice: [
+        {
+          notitle: "四川师范大学通告" //demo，这里是从数据只拿标题出来
+        }
+	  ],
+	  centerDialogVisible: false,
+	  //弹出框显示具体通知
+	  dialog:{
+		dialogmessage:'<p>seize	v.抓住；捉拿；夺；没收<br>interaction	n.相互作用；【航】干扰 互动；交互；交互作用<br>facilitate	v.促进；使容易<br>irrigate v.灌溉；冲洗（伤口或身体部位）<br>severe adj.极为恶劣的；十分严重的；严厉的；苛刻的<br>dramatic	adj.突然的；巨大的；令人吃惊的；激动人心的<br>alleviate	v.减轻；缓解；缓和<br>campaign	n.战役；运动<br>engage	v.啮合；雇用；聘用；吸引住（注意力、兴趣）                                                               <br>insightful adj.有深刻了解的；富有洞察力的<br>perceptive adj.理解力强的；有洞察力的；思维敏捷的；感知的<br>arouse v.激发；引起；唤醒；睡醒<br>sufficient adj.足够的；充足的<br>mentality n.心态；思想状况；思想方法<br>destination n.目的地；终点<br>endeavor n.努力 v.努力<br>distinction n.区别；区分；差别；卓越<br>distinct adj.清晰的；清楚的；明白的；明显的<br>readily adv.欣然地；乐意地；快捷地；轻而易举地<br>fatal adj.致命的；灾难性的；毁灭性的；导致失败的<br>it occurs to sb.“某人想到”<br>trend n.趋势；动向；趋向；动态 v.走向；趋向<br>demonstrate v.演示；证明；说明；示范<br>intently adv.聚精会神地；一心一意地<br>intent n.意图；目的；意向 adj.专注；专心；热切的；专注的<br>diminish v.减少；削弱；减小；贬低<br>guilty adj.感到内疚的；感到惭愧的；犯有罪的；有过失的<br>exaggerate v.夸大；夸张；言过其实&nbsp;<br></p>'
+	  }
+    };
   }
-}
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-	.setting{
-		margin: 10px;
-		width: 96%;
-		height: 100%;
-		padding: 10px;
-		
-	}
+<style>
 </style>

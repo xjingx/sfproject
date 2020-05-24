@@ -54,13 +54,7 @@
 						subs: [{
 							page: true,
 							path: "second",
-							title: "入住须知",
-							icon: "el-icon-tickets"
-						},
-						{
-							page: true,
-							path: "second2",
-							title: "入学通知",
+							title: "信息与公告",
 							icon: "el-icon-tickets"
 						}
 						]

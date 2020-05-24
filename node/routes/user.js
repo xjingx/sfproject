@@ -1,5 +1,5 @@
 const express = require('express');
-const { login } = require('../controller/user')
+const { login,insertUser } = require('../controller/user')
 const { SuccessModel, ErrorModel } = require('../model/model')
 
 const router = express.Router()
@@ -52,6 +52,17 @@ router.get('/session-test', (req, res, next) => {
       viewNum: session.viewNum
     })
   }
+})
+
+router.post('/insertUser', (req, res, next) => {
+  const { snumber, sname, sidnumber } = req.body
+  insertUser( snumber, sname, sidnumber ).then(data => {
+    if(data){
+      res.json(new SuccessModel())
+      return
+    }
+    res.json(new ErrorModel('插入失败'))
+  })
 })
 
 module.exports = router

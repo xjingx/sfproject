@@ -1,5 +1,5 @@
 const express = require('express');
-const { queryPersonInfo, changePersonInfo } = require('../controller/personInfo')
+const { queryPersonInfo, changePersonInfo, insertPersonInfo } = require('../controller/personInfo')
 const { SuccessModel, ErrorModel } = require('../model/model')
 
 const router = express.Router()
@@ -11,7 +11,7 @@ router.post('/queryPersonInfo', (req, res, next) => {
       res.json(new SuccessModel(data[0]))
       return
     }
-    res.json(new ErrorModel('登录失败'))
+    res.json(new ErrorModel('查找失败'))
   })
 })
 
@@ -22,7 +22,18 @@ router.post('/changePersonInfo', (req, res, next) => {
       res.json(new SuccessModel())
       return
     }
-    res.json(new ErrorModel('登录失败'))
+    res.json(new ErrorModel('更新失败'))
+  })
+})
+
+router.post('/insertPerson', (req, res, next) => {
+  const { snumber, sname, sidnumber, stestnumber, sdepartment, smajor, sbirthday, sgender } = req.body
+  insertPersonInfo( snumber, sname, sidnumber, stestnumber, sdepartment, smajor, sbirthday, sgender ).then(data => {
+    if(data){
+      res.json(new SuccessModel())
+      return
+    }
+    res.json(new ErrorModel('更新失败'))
   })
 })
 

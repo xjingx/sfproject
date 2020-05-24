@@ -102,14 +102,7 @@ const router = new Router({
             title: '入住须知',
           }
         },
-				{
-				  path: '/second2',
-				  name: '入学通知',
-				  component: () => import('@/components/celan/second2'),
-				  meta: {
-				    title: '入学通知',
-				  }
-				},
+				
 		{
 		  path: '/third',
 		  name: '信息采集',
