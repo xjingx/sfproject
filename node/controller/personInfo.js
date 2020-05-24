@@ -31,8 +31,19 @@ insertPersonInfo = (snumber, sname, sidnumber, stestnumber, sdepartment, smajor,
           })
 }
 
+selectInfoFinish = () => {
+  return query($sqlQuery.selectInfoByfinish)
+           .catch(e => {
+             console.log('change error', JSON.stringify(e));
+             return {
+               errmsg: JSON.stringify(e)
+             }
+           })
+}
+
 module.exports = {
   queryPersonInfo,
   changePersonInfo,
-  insertPersonInfo
+  insertPersonInfo,
+  selectInfoFinish
 }

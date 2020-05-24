@@ -14,6 +14,7 @@ const user = {
   updateChargeBySnumber: "update charge set pay='true' where snumber=? and sname=?",
   selectPayBysnumber: 'select pay from charge where snumber=? and sname=?',
   selectFinishBysnumber: 'select finish from checkin where snumber=? and sname=?',
+  selectInfoByfinish: "select snumber,sname,smajor,sdepartment from students where snumber in (select snumber from checkin where finish='true')",
   updateFinishBysnumber: "update checkin set finish='true' where snumber=? and sname=?"
 };
 

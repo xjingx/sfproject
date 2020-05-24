@@ -1,5 +1,5 @@
 const express = require('express');
-const { queryPersonInfo, changePersonInfo, insertPersonInfo } = require('../controller/personInfo')
+const { queryPersonInfo, changePersonInfo, insertPersonInfo, selectInfoFinish } = require('../controller/personInfo')
 const { SuccessModel, ErrorModel } = require('../model/model')
 
 const router = express.Router()
@@ -33,8 +33,17 @@ router.post('/insertPerson', (req, res, next) => {
       res.json(new SuccessModel())
       return
     }
-    res.json(new ErrorModel('更新失败'))
+    res.json(new ErrorModel('插入失败'))
   })
 })
 
+router.post('/selectInfoFinish', (req, res, next) => {
+  selectInfoFinish().then(data => {
+    if(data){
+      res.json(new SuccessModel(data))
+      return
+    }
+    res.json(new ErrorModel('查找失败'))
+  })
+})
 module.exports = router
