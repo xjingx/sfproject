@@ -149,7 +149,7 @@ import axios from 'axios'
     color: #0056B3;
   }
   .infclass{
-    margin-left: 35%;
+    margin-left: 20%;
     margin-top: 50px;
   }
 </style>
