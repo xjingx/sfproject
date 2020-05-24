@@ -1,7 +1,7 @@
 <!-- 这是侧栏第六个页面：财务缴费 -->
 <template>
   <div>
-    <el-container>
+    <el-container v-if="payoff">
       <el-main height>
         <!-- 页面主体内容 -->
         <div class="title">
@@ -86,6 +86,9 @@
         </div>
       </el-main>
     </el-container>
+    <div v-if="!payoff">
+      缴费成功
+    </div>
   </div>
 </template>
 <style>
@@ -131,12 +134,15 @@ export default {
       oneCard: "",
       administration: "",
       flag: true,
-      open: false
+      open: false,
+      payoff: true
     };
   },
   methods: {
     toggle() {   //点击事件函数
-      (this.flag = false), (this.open = true);
+      this.flag = false;
+      this.open = true;
+      this.payoff = false;
     },
     payCharge() {
       axios({
