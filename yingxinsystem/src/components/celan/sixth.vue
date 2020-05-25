@@ -15,9 +15,12 @@
             <el-col :span="6">
               <div class="grid-content bg-purple">
                 <p>本科生学费</p>
-                <div class="font-setting">
+                <div class="font-setting" id="amountMoney">
                   <p>应缴金额：{{ tuition }}</p>
-                  <p>已缴金额：<label v-if="open">{{ tuition }}</label></p>
+                  <p>
+                    已缴金额：
+                    <label v-if="open">{{ tuition }}</label>
+                  </p>
                 </div>
               </div>
             </el-col>
@@ -26,7 +29,10 @@
                 <p>住宿费</p>
                 <div class="font-setting">
                   <p>应缴金额：{{ hotelExpense }}</p>
-                  <p>已缴金额：<label v-if="open">{{ hotelExpense }}</label></p>
+                  <p>
+                    已缴金额：
+                    <label v-if="open">{{ hotelExpense }}</label>
+                  </p>
                 </div>
               </div>
             </el-col>
@@ -35,7 +41,10 @@
                 <p>教材款</p>
                 <div class="font-setting">
                   <p>应缴金额：{{ textbook }}</p>
-                  <p>已缴金额：<label v-if="open">{{ textbook }}</label></p>
+                  <p>
+                    已缴金额：
+                    <label v-if="open">{{ textbook }}</label>
+                  </p>
                 </div>
               </div>
             </el-col>
@@ -44,7 +53,10 @@
                 <p>基本医疗保险</p>
                 <div class="font-setting">
                   <p>应缴金额：{{ basicMedical }}</p>
-                  <p>已缴金额：<label v-if="open">{{ basicMedical }}</label></p>
+                  <p>
+                    已缴金额：
+                    <label v-if="open">{{ basicMedical }}</label>
+                  </p>
                 </div>
               </div>
             </el-col>
@@ -56,7 +68,10 @@
                 <p>校园一卡通预存款</p>
                 <div class="font-setting">
                   <p>应缴金额：{{ oneCard }}</p>
-                  <p>已缴金额：<label v-if="open">{{ oneCard }}</label></p>
+                  <p>
+                    已缴金额：
+                    <label v-if="open">{{ oneCard }}</label>
+                  </p>
                 </div>
               </div>
             </el-col>
@@ -65,7 +80,10 @@
                 <p>新生代管费</p>
                 <div class="font-setting">
                   <p>应缴金额：{{ administration }}</p>
-                  <p>已缴金额：<label v-if="open">{{ administration }}</label></p>
+                  <p>
+                    已缴金额：
+                    <label v-if="open">{{ administration }}</label>
+                  </p>
                 </div>
               </div>
             </el-col>
@@ -86,9 +104,7 @@
         </div>
       </el-main>
     </el-container>
-    <div v-if="!payoff">
-      缴费成功
-    </div>
+    <div v-if="!payoff" class="second">您已缴费成功！</div>
   </div>
 </template>
 <style>
@@ -121,13 +137,31 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
+.second {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(0, -50%);
+  -moz-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -o-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+
+  font-size: 30px;
+  border-radius: 0px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  background-color:#339900;
+  color: white;
+}
 </style>
 <script>
 import axios from "axios";
 export default {
   data() {
     return {
-      tuition: "",
+      tuition: "1",
       textbook: "",
       hotelExpense: "",
       basicMedical: "",
@@ -139,7 +173,8 @@ export default {
     };
   },
   methods: {
-    toggle() {   //点击事件函数
+    toggle() {
+      //点击事件函数
       this.flag = false;
       this.open = true;
       this.payoff = false;

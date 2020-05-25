@@ -43,10 +43,66 @@ current-page:起始页
 export default {
   data() {
     return {
-      pagesize: 2, //每页的数据条数
+      pagesize: 8, //每页的数据条数
       currentPage: 1, //开始页面
       tableData: [
         {
+          sno: "2017110411",
+          name: "胡爽",
+          major: "软件工程",
+          collge: "计算机科学学院",
+          report: "已报道"
+        },
+        {
+          sno: "2017110344",
+          name: "徐靖翔",
+          major: "软件工程",
+          collge: "计算机科学学院",
+          report: "已报道"
+        },
+        {
+          sno: "2017110321",
+          name: "李海铭",
+          major: "软件工程",
+          collge: "计算机科学学院",
+          report: "已报道"
+        },
+        {
+          sno: "2017110407",
+          name: "邓宇",
+          major: "软件工程",
+          collge: "计算机科学学院",
+          report: "已报道"
+        },
+                {
+          sno: "2017110411",
+          name: "胡爽",
+          major: "软件工程",
+          collge: "计算机科学学院",
+          report: "已报道"
+        },
+        {
+          sno: "2017110344",
+          name: "徐靖翔",
+          major: "软件工程",
+          collge: "计算机科学学院",
+          report: "已报道"
+        },
+        {
+          sno: "2017110321",
+          name: "李海铭",
+          major: "软件工程",
+          collge: "计算机科学学院",
+          report: "已报道"
+        },
+        {
+          sno: "2017110407",
+          name: "邓宇",
+          major: "软件工程",
+          collge: "计算机科学学院",
+          report: "已报道"
+        },
+                {
           sno: "2017110411",
           name: "胡爽",
           major: "软件工程",

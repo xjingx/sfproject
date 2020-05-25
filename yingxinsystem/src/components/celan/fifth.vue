@@ -26,9 +26,17 @@
           <el-row>
             <el-col :span="10">
               <el-form-item label="班级" prop="class">
-                <el-input v-model="ruleForm.class" placeholder="如：软件工程2017级4班"></el-input>
+                <el-input v-model="ruleForm.class" placeholder="如：2017级4班"></el-input>
               </el-form-item>
             </el-col>
+            <el-col :span="10">
+              <el-form-item label="专业" prop="major">
+                <el-input v-model="ruleForm.major"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+
+          <el-row>
             <el-col :span="10">
               <el-form-item label="学院" prop="collge">
                 <el-input v-model="ruleForm.collge"></el-input>
@@ -105,18 +113,19 @@
 export default {
   data() {
     return {
-      flag1: false,//控制表单项的显示
-      flag2: false,//控制表单项的显示
+      flag1: false, //控制表单项的显示
+      flag2: false, //控制表单项的显示
       ruleForm: {
-        sno: "",         //学号
-        name: "",        //姓名
-        class: "",       //班级
-        collge: "",      //学院
-        region: "",      //选择器
-        money1: "",      //缓交金额
-        number: "",      //合同编号
-        reason: "",      //申请原因
-        date: ""         //还款日期
+        sno: "", //学号
+        name: "", //姓名
+        class: "", //班级
+        major: "", //专业
+        collge: "", //学院
+        region: "", //选择器
+        money1: "", //缓交金额
+        number: "", //合同编号
+        reason: "", //申请原因
+        date: "" //还款日期
       },
       rules: {
         sno: [
@@ -126,17 +135,22 @@ export default {
 
         name: [
           { required: true, message: "请输入姓名", trigger: "blur" },
-          { min: 3, max: 5, message: "长度为2到10个字符", trigger: blur }
+          { min: 2, max: 10, message: "长度为2到10个字符", trigger: blur }
         ],
 
         class: [
           { required: true, message: "请输入班级", trigger: "blur" },
-          { min: 3, max: 5, message: "长度为7到20个字符", trigger: blur }
+          { min: 7, max: 7, message: "长度为7个字符", trigger: blur }
+        ],
+
+        major: [
+          { required: true, message: "请输入专业", trigger: "blur" },
+          { min: 1, max: 15, message: "长度为1到15个字符", trigger: blur }
         ],
 
         collge: [
           { required: true, message: "请输入学院", trigger: "blur" },
-          { min: 3, max: 15, message: "长度为1到15个字符", trigger: blur }
+          { min: 1, max: 15, message: "长度为1到15个字符", trigger: blur }
         ],
 
         region: [
@@ -168,14 +182,17 @@ export default {
   },
 
   methods: {
-    toggle1() {   //点击事件函数
+    toggle1() {
+      //点击事件函数
       this.flag1 = true;
       this.flag2 = false;
     },
-    toggle2() {   //点击事件函数
+    toggle2() {
+      //点击事件函数
       (this.flag2 = true), (this.flag1 = false);
     },
-    submitForm(formName) {   //提交表单
+    submitForm(formName) {
+      //提交表单
       this.$refs[formName].validate(valid => {
         if (valid) {
           alert("submit!");
@@ -185,7 +202,8 @@ export default {
         }
       });
     },
-    resetForm(formName) {  //重置表单
+    resetForm(formName) {
+      //重置表单
       this.$refs[formName].resetFields();
       this.flag1 = false;
       this.flag2 = false;
