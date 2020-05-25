@@ -21,7 +21,18 @@ selectPay = (snumber, sname) => {
           })
 }
 
+queryPayOff = (snumber, sname) => {
+  return query($sqlQuery.queryPayOffBysnumber, [snumber, sname])
+          .catch(e => {
+              console.log('pay error', JSON.stringify(e));
+              return {
+                  errmsg: JSON.stringify(e)
+              }
+          })
+}
+
 module.exports = {
   payCharge,
-  selectPay
+  selectPay,
+  queryPayOff
 }

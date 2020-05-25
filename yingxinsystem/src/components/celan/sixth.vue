@@ -16,10 +16,10 @@
               <div class="grid-content bg-purple">
                 <p>本科生学费</p>
                 <div class="font-setting" id="amountMoney">
-                  <p>应缴金额：{{ tuition }}</p>
+                  <p>应缴金额：{{ payOff.tuition }}</p>
                   <p>
                     已缴金额：
-                    <label v-if="open">{{ tuition }}</label>
+                    <label>{{ hasPayOff.tuition }}</label>
                   </p>
                 </div>
               </div>
@@ -28,10 +28,10 @@
               <div class="grid-content bg-purple">
                 <p>住宿费</p>
                 <div class="font-setting">
-                  <p>应缴金额：{{ hotelExpense }}</p>
+                  <p>应缴金额：{{ payOff.hotelExpense }}</p>
                   <p>
                     已缴金额：
-                    <label v-if="open">{{ hotelExpense }}</label>
+                    <label>{{ hasPayOff.hotelExpense }}</label>
                   </p>
                 </div>
               </div>
@@ -40,10 +40,10 @@
               <div class="grid-content bg-purple">
                 <p>教材款</p>
                 <div class="font-setting">
-                  <p>应缴金额：{{ textbook }}</p>
+                  <p>应缴金额：{{ payOff.textbook }}</p>
                   <p>
                     已缴金额：
-                    <label v-if="open">{{ textbook }}</label>
+                    <label>{{ hasPayOff.textbook }}</label>
                   </p>
                 </div>
               </div>
@@ -52,10 +52,10 @@
               <div class="grid-content bg-purple">
                 <p>基本医疗保险</p>
                 <div class="font-setting">
-                  <p>应缴金额：{{ basicMedical }}</p>
+                  <p>应缴金额：{{ payOff.basicMedical }}</p>
                   <p>
                     已缴金额：
-                    <label v-if="open">{{ basicMedical }}</label>
+                    <label>{{ hasPayOff.basicMedical }}</label>
                   </p>
                 </div>
               </div>
@@ -67,10 +67,10 @@
               <div class="grid-content bg-purple">
                 <p>校园一卡通预存款</p>
                 <div class="font-setting">
-                  <p>应缴金额：{{ oneCard }}</p>
+                  <p>应缴金额：{{ payOff.oneCard }}</p>
                   <p>
                     已缴金额：
-                    <label v-if="open">{{ oneCard }}</label>
+                    <label>{{ hasPayOff.oneCard }}</label>
                   </p>
                 </div>
               </div>
@@ -79,10 +79,10 @@
               <div class="grid-content bg-purple">
                 <p>新生代管费</p>
                 <div class="font-setting">
-                  <p>应缴金额：{{ administration }}</p>
+                  <p>应缴金额：{{ payOff.administration }}</p>
                   <p>
                     已缴金额：
-                    <label v-if="open">{{ administration }}</label>
+                    <label>{{ hasPayOff.administration }}</label>
                   </p>
                 </div>
               </div>
@@ -90,17 +90,17 @@
           </el-row>
         </div>
         <div class="margin-setting">
-          <p v-if="flag">
+          <p v-if="hasPayOff.tuition === 0">
             缴费情况：
             <label style="color: red">未缴费</label>
           </p>
-          <p v-if="open">
+          <p v-if="hasPayOff.tuition !== 0">
             缴费情况：
             <label style="color: green">已缴费</label>
           </p>
         </div>
         <div>
-          <el-button type="primary" @click="toggle();payCharge()">在线缴费</el-button>
+          <el-button type="primary" @click="payCharge()">在线缴费</el-button>
         </div>
       </el-main>
     </el-container>
@@ -161,26 +161,68 @@ import axios from "axios";
 export default {
   data() {
     return {
-      tuition: "1",
-      textbook: "",
-      hotelExpense: "",
-      basicMedical: "",
-      oneCard: "",
-      administration: "",
-      flag: true,
-      open: false,
+      payOff: {
+        tuition: 0,
+        textbook: 0,
+        hotelExpense: 0,
+        basicMedical: 0,
+        oneCard: 0,
+        administration: 0,
+      },
+      hasPayOff: {
+        tuition: 0,
+        textbook: 0,
+        hotelExpense: 0,
+        basicMedical: 0,
+        oneCard: 0,
+        administration: 0,
+      },
       payoff: true
     };
   },
+  async mounted() {
+    await this.queryPayOff()
+    await this.queryCharge()
+  },
   methods: {
-    toggle() {
-      //点击事件函数
-      this.flag = false;
-      this.open = true;
-      this.payoff = false;
+    async queryPayOff() {
+      await axios({
+        method: "post",
+        url: "/api/pay/queryPayOff",
+        data: {
+          snumber: localStorage.getItem("userNumber"),
+          sname: localStorage.getItem("userName")
+        }
+      }).then(res => {
+        console.log("res", res.data.error);
+        if (res.data.error === 0) {
+          this.payOff = res.data.data[0]
+        }
+      });
     },
-    payCharge() {
-      axios({
+    async queryCharge() {
+      await axios({
+        method: "post",
+        url: "/api/pay/selectPay",
+        data: {
+          snumber: localStorage.getItem("userNumber"),
+          sname: localStorage.getItem("userName")
+        }
+      }).then(res => {
+        console.log("res", res.data.error);
+        if (res.data.error === 0) {
+          console.log(res.data)
+          if(res.data.data[0].pay === 'true'){
+            //this.payoff = false;
+            this.hasPayOff = this.payOff
+          } else {
+            return ;
+          }
+        }
+      });
+    },
+    async payCharge() {
+      await axios({
         method: "post",
         url: "/api/pay/payCharge",
         data: {
@@ -190,7 +232,9 @@ export default {
       }).then(res => {
         console.log("res", res.data.error);
         if (res.data.error === 0) {
-          alert("submit success");
+          alert("缴费成功");
+          //this.payoff = false
+          this.hasPayOff = this.payOff
         }
       });
     }

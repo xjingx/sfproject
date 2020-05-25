@@ -6,13 +6,13 @@
       style="width:100%"
       border
     >
-      <el-table-column label="学号" prop="sno"></el-table-column>
-      <el-table-column label="姓名" prop="name"></el-table-column>
+      <el-table-column label="学号" prop="snumber"></el-table-column>
+      <el-table-column label="姓名" prop="sname"></el-table-column>
       <el-table-column label="专业" prop="major"></el-table-column>
-      <el-table-column label="学院" prop="collge"></el-table-column>
-      <el-table-column label="报道状态" prop="report">
-        <template scope="scope">
-          <span v-if="scope.row.report === '未报道'" style="color:red">未报道</span>
+      <el-table-column label="学院" prop="department"></el-table-column>
+      <el-table-column label="报道状态" prop="finish">
+        <template slot-scope="scope">
+          <span v-if="scope.row.finish === null" style="color:red">未报道</span>
           <span v-else style="color:green;font-weight:bolder">已报道</span>
         </template>
       </el-table-column>
@@ -40,6 +40,7 @@ current-page:起始页
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -47,95 +48,110 @@ export default {
       currentPage: 1, //开始页面
       tableData: [
         {
-          sno: "2017110411",
-          name: "胡爽",
+          snumber: "2017110411",
+          sname: "胡爽",
           major: "软件工程",
-          collge: "计算机科学学院",
-          report: "已报道"
+          department: "计算机科学学院",
+          finish: null
         },
         {
-          sno: "2017110344",
-          name: "徐靖翔",
+          snumber: "2017110344",
+          sname: "徐靖翔",
           major: "软件工程",
-          collge: "计算机科学学院",
-          report: "已报道"
+          department: "计算机科学学院",
+          finish: "true"
         },
         {
-          sno: "2017110321",
-          name: "李海铭",
+          snumber: "2017110321",
+          sname: "李海铭",
           major: "软件工程",
-          collge: "计算机科学学院",
-          report: "已报道"
+          department: "计算机科学学院",
+          finish: null
         },
         {
-          sno: "2017110407",
-          name: "邓宇",
+          snumber: "2017110407",
+          sname: "邓宇",
           major: "软件工程",
-          collge: "计算机科学学院",
-          report: "已报道"
+          department: "计算机科学学院",
+          finish: "true"
         },
                 {
-          sno: "2017110411",
-          name: "胡爽",
+          snumber: "2017110411",
+          sname: "胡爽",
           major: "软件工程",
-          collge: "计算机科学学院",
-          report: "已报道"
+          department: "计算机科学学院",
+          finish: "true"
         },
         {
-          sno: "2017110344",
-          name: "徐靖翔",
+          snumber: "2017110344",
+          sname: "徐靖翔",
           major: "软件工程",
-          collge: "计算机科学学院",
-          report: "已报道"
+          department: "计算机科学学院",
+          finish: null
         },
         {
-          sno: "2017110321",
-          name: "李海铭",
+          snumber: "2017110321",
+          sname: "李海铭",
           major: "软件工程",
-          collge: "计算机科学学院",
-          report: "已报道"
+          department: "计算机科学学院",
+          finish: null
         },
         {
-          sno: "2017110407",
-          name: "邓宇",
+          snumber: "2017110407",
+          sname: "邓宇",
           major: "软件工程",
-          collge: "计算机科学学院",
-          report: "已报道"
+          department: "计算机科学学院",
+          finish: "true"
         },
                 {
-          sno: "2017110411",
-          name: "胡爽",
+          snumber: "2017110411",
+          sname: "胡爽",
           major: "软件工程",
-          collge: "计算机科学学院",
-          report: "已报道"
+          department: "计算机科学学院",
+          finish: "true"
         },
         {
-          sno: "2017110344",
-          name: "徐靖翔",
+          snumber: "2017110344",
+          sname: "徐靖翔",
           major: "软件工程",
-          collge: "计算机科学学院",
-          report: "已报道"
+          department: "计算机科学学院",
+          finish: "true"
         },
         {
-          sno: "2017110321",
-          name: "李海铭",
+          snumber: "2017110321",
+          sname: "李海铭",
           major: "软件工程",
-          collge: "计算机科学学院",
-          report: "已报道"
+          department: "计算机科学学院",
+          finish: "true"
         },
         {
-          sno: "2017110407",
-          name: "邓宇",
+          snumber: "2017110407",
+          sname: "邓宇",
           major: "软件工程",
-          collge: "计算机科学学院",
-          report: "已报道"
+          department: "计算机科学学院",
+          finish: "true"
         }
       ]
     };
   },
+  mounted() {
+    this.queryStudentInfo()
+  },
   methods: {
     handleCurrentChange(val) {
       this.currentPage = val;
+    },
+    async queryStudentInfo() {
+      await axios({
+        method: "post",
+        url: "/api/person/selectInfoFinish",
+      }).then(res => {
+        console.log("res", res.data.error);
+        if (res.data.error === 0) {
+          console.log(res.data);
+          this.tableData = res.data.data
+        }
+      });
     }
   }
 };

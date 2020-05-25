@@ -14,8 +14,9 @@ const user = {
   updateChargeBySnumber: "update charge set pay='true' where snumber=? and sname=?",
   selectPayBysnumber: 'select pay from charge where snumber=? and sname=?',
   selectFinishBysnumber: 'select finish from checkin where snumber=? and sname=?',
-  selectInfoByfinish: "select snumber,sname,smajor,sdepartment from students where snumber in (select snumber from checkin where finish='true')",
-  updateFinishBysnumber: "update checkin set finish='true' where snumber=? and sname=?"
+  selectInfoByfinish: "select snumber,sname,major,department,finish from checkin",
+  updateFinishBysnumber: "update checkin set finish='true' where snumber=? and sname=?",
+  queryPayOffBysnumber: "select tuition, hotelExpense, basicMedical, oneCard, administration, textbook from payoff where department in (select sdepartment from students where snumber=? and sname=?)"
 };
 
 module.exports = {
