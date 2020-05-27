@@ -42,9 +42,6 @@
                 <el-input v-model="ruleForm.collge"></el-input>
               </el-form-item>
             </el-col>
-          </el-row>
-
-          <el-row>
             <el-col :span="10">
               <el-form-item label="申请绿色通道类别" prop="region">
                 <el-select v-model="ruleForm.region" placeholder="请选择">
@@ -59,7 +56,7 @@
             <el-row>
               <el-col :span="10">
                 <el-form-item label="缓交金额" prop="money1">
-                  <el-input v-model="ruleForm.money1"></el-input>
+                  <el-input v-model.number="ruleForm.money1"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="10">
@@ -158,8 +155,8 @@ export default {
         ],
 
         money1: [
-          { required: true, message: "请输入金额", trigger: "blur" },
-          { min: 1, max: 6, message: "长度为1到6个字符", trigger: blur }
+          { required: true, message: "请输入金额" },
+          { type: "number", message: "金额必须为数字" }
         ],
 
         number: [
@@ -191,6 +188,7 @@ export default {
       //点击事件函数
       (this.flag2 = true), (this.flag1 = false);
     },
+
     submitForm(formName) {
       //提交表单
       this.$refs[formName].validate(valid => {
