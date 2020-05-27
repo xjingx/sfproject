@@ -240,12 +240,14 @@ export default {
       })
     },
 
-    submitForm(formName) {
+    async submitForm(formName) {
       //提交表单
       if (this.ruleForm.greentype == "生源地贷款"){
-        this.insertDK()
+        await this.insertDK()
+        this.resetForm(formName)
       } else {
-        this.insertHJ()
+        await this.insertHJ()
+        this.resetForm(formName)
       }
     },
     resetForm(formName) {

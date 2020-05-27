@@ -21,7 +21,18 @@ insertGreenChannelhj = (snumber, sname, sclass, major, department, greentype, de
           })
 }
 
+queryGreenInfo = () => {
+  return query($sqlQuery.queryGreenInfo)
+           .catch(e => {
+             console.log('change error', JSON.stringify(e));
+             return {
+               errmsg: JSON.stringify(e)
+             }
+           })
+}
+
 module.exports = {
   insertGreenChanneldk,
-  insertGreenChannelhj
+  insertGreenChannelhj,
+  queryGreenInfo
 }
