@@ -16,7 +16,9 @@ const user = {
   selectFinishBysnumber: 'select finish from checkin where snumber=? and sname=?',
   selectInfoByfinish: "select snumber,sname,major,department,finish from checkin",
   updateFinishBysnumber: "update checkin set finish='true' where snumber=? and sname=?",
-  queryPayOffBysnumber: "select tuition, hotelExpense, basicMedical, oneCard, administration, textbook from payoff where department in (select sdepartment from students where snumber=? and sname=?)"
+  queryPayOffBysnumber: "select tuition, hotelExpense, basicMedical, oneCard, administration, textbook from payoff where department in (select sdepartment from students where snumber=? and sname=?)",
+  insertGreenChanneldk: "insert into greenchannel(snumber, sname, sclass, major, department, greentype, serialnumber, reason) values (?,?,?,?,?,?,?,?)",
+  insertGreenChannelhj: "insert into greenchannel(snumber, sname, sclass, major, department, greentype, delaymoney, delaydate, reason) values (?,?,?,?,?,?,?,?,?)"
 };
 
 module.exports = {

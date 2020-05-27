@@ -12,21 +12,21 @@
         >
           <el-row>
             <el-col :span="10">
-              <el-form-item label="学号" prop="sno">
-                <el-input v-model="ruleForm.sno"></el-input>
+              <el-form-item label="学号" prop="snumber">
+                <el-input v-model="ruleForm.snumber"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="10">
-              <el-form-item label="姓名" prop="name">
-                <el-input v-model="ruleForm.name"></el-input>
+              <el-form-item label="姓名" prop="sname">
+                <el-input v-model="ruleForm.sname"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row>
             <el-col :span="10">
-              <el-form-item label="班级" prop="class">
-                <el-input v-model="ruleForm.class" placeholder="如：2017级4班"></el-input>
+              <el-form-item label="班级" prop="sclass">
+                <el-input v-model="ruleForm.sclass" placeholder="如：2017级4班"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="10">
@@ -38,16 +38,16 @@
 
           <el-row>
             <el-col :span="10">
-              <el-form-item label="学院" prop="collge">
-                <el-input v-model="ruleForm.collge"></el-input>
+              <el-form-item label="学院" prop="department">
+                <el-input v-model="ruleForm.department"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row>
             <el-col :span="10">
-              <el-form-item label="申请绿色通道类别" prop="region">
-                <el-select v-model="ruleForm.region" placeholder="请选择">
+              <el-form-item label="申请绿色通道类别" prop="greentype">
+                <el-select v-model="ruleForm.greentype" placeholder="请选择">
                   <el-option label="生源地贷款" value="生源地贷款" @click.native="toggle1()"></el-option>
                   <el-option label="缓交" value="缓交" @click.native="toggle2"></el-option>
                 </el-select>
@@ -58,16 +58,16 @@
           <div v-if="flag2">
             <el-row>
               <el-col :span="10">
-                <el-form-item label="缓交金额" prop="money1">
-                  <el-input v-model="ruleForm.money1"></el-input>
+                <el-form-item label="缓交金额" prop="delaymoney">
+                  <el-input v-model="ruleForm.delaymoney"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="10">
-                <el-form-item label="缓交还款日期" prop="date">
+                <el-form-item label="缓交还款日期" prop="delaydate">
                   <el-date-picker
                     type="date"
                     placeholder="选择日期"
-                    v-model="ruleForm.date"
+                    v-model="ruleForm.delaydate"
                     style="width: 100%;"
                   ></el-date-picker>
                 </el-form-item>
@@ -78,8 +78,8 @@
           <div v-if="flag1">
             <el-row>
               <el-col :span="10">
-                <el-form-item label="贷款合同编号" prop="number">
-                  <el-input v-model="ruleForm.number"></el-input>
+                <el-form-item label="贷款合同编号" prop="serialnumber">
+                  <el-input v-model="ruleForm.serialnumber"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -110,22 +110,23 @@
 </style>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
       flag1: false, //控制表单项的显示
       flag2: false, //控制表单项的显示
       ruleForm: {
-        sno: "", //学号
-        name: "", //姓名
-        class: "", //班级
+        snumber: "", //学号
+        sname: "", //姓名
+        sclass: "", //班级
         major: "", //专业
-        collge: "", //学院
-        region: "", //选择器
-        money1: "", //缓交金额
-        number: "", //合同编号
+        department: "", //学院
+        greentype: "", //选择器
+        serialnumber: null, //合同编号
+        delaymoney: null, //缓交金额
+        delaydate: null, //还款日期
         reason: "", //申请原因
-        date: "" //还款日期
       },
       rules: {
         sno: [
@@ -191,16 +192,63 @@ export default {
       //点击事件函数
       (this.flag2 = true), (this.flag1 = false);
     },
+    async insertDK() {
+      await axios({
+        method: 'post',
+        url: '/api/green/insertGreenChanneldk',
+        data: {
+          snumber: this.ruleForm.snumber, //学号
+          sname: this.ruleForm.sname, //姓名
+          sclass: this.ruleForm.sclass, //班级
+          major: this.ruleForm.major, //专业
+          department: this.ruleForm.department, //学院
+          greentype: this.ruleForm.greentype, //选择器
+          serialnumber: this.ruleForm.serialnumber, //合同编号
+          delaymoney: null, //缓交金额
+          delaydate: null, //还款日期
+          reason: this.ruleForm.reason, //申请原因
+        }
+      })
+      .then(res => {
+        console.log("res",res.data.error)
+        if(res.data.error === 0){
+          console.log("insert green success", res.data)
+          alert("申请贷款成功")
+        }
+      })
+    },
+    async insertHJ() {
+      await axios({
+        method: 'post',
+        url: '/api/green/insertGreenChannelhj',
+        data: {
+          snumber: this.ruleForm.snumber, //学号
+          sname: this.ruleForm.sname, //姓名
+          sclass: this.ruleForm.sclass, //班级
+          major: this.ruleForm.major, //专业
+          department: this.ruleForm.department, //学院
+          greentype: this.ruleForm.greentype, //选择器
+          serialnumber: null, //合同编号
+          delaymoney: this.ruleForm.delaymoney, //缓交金额
+          delaydate: this.ruleForm.delaydate, //还款日期
+          reason: this.ruleForm.reason, //申请原因
+        }
+      })
+      .then(res => {
+        console.log("res",res.data.error)
+        if(res.data.error === 0){
+          console.log("insert green success", res.data)
+          alert("申请缓交成功")
+        }
+      })
+    },
     submitForm(formName) {
       //提交表单
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+      if (this.ruleForm.greentype == "生源地贷款"){
+        this.insertDK()
+      } else {
+        this.insertHJ()
+      }
     },
     resetForm(formName) {
       //重置表单
