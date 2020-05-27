@@ -42,9 +42,6 @@
                 <el-input v-model="ruleForm.department"></el-input>
               </el-form-item>
             </el-col>
-          </el-row>
-
-          <el-row>
             <el-col :span="10">
               <el-form-item label="申请绿色通道类别" prop="greentype">
                 <el-select v-model="ruleForm.greentype" placeholder="请选择">
@@ -58,8 +55,13 @@
           <div v-if="flag2">
             <el-row>
               <el-col :span="10">
+<<<<<<< HEAD
                 <el-form-item label="缓交金额" prop="delaymoney">
                   <el-input v-model="ruleForm.delaymoney"></el-input>
+=======
+                <el-form-item label="缓交金额" prop="money1">
+                  <el-input v-model.number="ruleForm.money1"></el-input>
+>>>>>>> a45392d3a04cff14cb3eee2760cabfe1080cc526
                 </el-form-item>
               </el-col>
               <el-col :span="10">
@@ -159,8 +161,8 @@ export default {
         ],
 
         money1: [
-          { required: true, message: "请输入金额", trigger: "blur" },
-          { min: 1, max: 6, message: "长度为1到6个字符", trigger: blur }
+          { required: true, message: "请输入金额" },
+          { type: "number", message: "金额必须为数字" }
         ],
 
         number: [
@@ -192,6 +194,7 @@ export default {
       //点击事件函数
       (this.flag2 = true), (this.flag1 = false);
     },
+<<<<<<< HEAD
     async insertDK() {
       await axios({
         method: 'post',
@@ -242,6 +245,9 @@ export default {
         }
       })
     },
+=======
+
+>>>>>>> a45392d3a04cff14cb3eee2760cabfe1080cc526
     submitForm(formName) {
       //提交表单
       if (this.ruleForm.greentype == "生源地贷款"){
