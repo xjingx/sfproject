@@ -1,27 +1,28 @@
-const query= require('../dao/query').query;
-const $sqlQuery = require('../dao/sqlCRUD').user;
+const express = require('express');
+const { insertGreenChanneldk, insertGreenChannelhj } = require('../controller/greenchannel')
+const { SuccessModel, ErrorModel } = require('../model/model')
 
-insertGreenChanneldk = (snumber, sname, sclass, major, department, greentype, serialnumber, reason) => {
-  return query($sqlQuery.insertGreenChanneldk, [snumber, sname, sclass, major, department, greentype, serialnumber, reason])
-          .catch(e => {
-              console.log('insert error', JSON.stringify(e));
-              return {
-                  errmsg: JSON.stringify(e)
-              }
-          })
-}
+const router = express.Router()
 
-insertGreenChannelhj = (snumber, sname, sclass, major, department, greentype, delaymoney, delaydate, reason) => {
-  return query($sqlQuery.insertGreenChannelhj, [snumber, sname, sclass, major, department, greentype, delaymoney, delaydate, reason])
-          .catch(e => {
-              console.log('insert error', JSON.stringify(e));
-              return {
-                  errmsg: JSON.stringify(e)
-              }
-          })
-}
+router.post('/insertGreenChanneldk', (req, res, next) => {
+  const { snumber, sname, sclass, major, department, greentype, serialnumber, reason } = req.body
+  insertGreenChanneldk(snumber, sname, sclass, major, department, greentype, serialnumber, reason).then(data => {
+    if(data){
+      res.json(new SuccessModel())
+      return
+    }
+    res.json(new ErrorModel('插入失败'))
+  })
+})
 
-module.exports = {
-  insertGreenChanneldk,
-  insertGreenChannelhj
-}
+router.post('/insertGreenChannelhj', (req, res, next) => {
+  const { snumber, sname, sclass, major, department, greentype, delaymoney, delaydate, reason } = req.body
+  insertGreenChannelhj(snumber, sname, sclass, major, department, greentype, delaymoney, delaydate, reason).then(data => {
+    if(data){
+      res.json(new SuccessModel())
+      return
+    }
+    res.json(new ErrorModel('插入失败'))
+  })
+})
+module.exports = router
