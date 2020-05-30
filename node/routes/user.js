@@ -9,6 +9,7 @@ router.post('/login', (req, res, next) => {
   login(snumber, spassword).then(data => {
     if (data[0]) {
       console.log("成功")
+      console.log(data[0])
       req.session.sname = data[0].sname
       res.json(new SuccessModel(snumber,data[0].sname))
       return
