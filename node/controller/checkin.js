@@ -21,6 +21,16 @@ selectFinish = (snumber, sname) => {
           })
 }
 
+const insertCheckin = (snumber, sname, active, finish, department, major) => {
+  return query($sqlQuery.insertCheckinBySnumber, [snumber, sname, active, finish, department, major])
+         .catch(e => {
+              console.log('insert error', JSON.stringify(e));
+              return {
+                  errmsg: JSON.stringify(e)
+              }
+         })
+}
+
 module.exports = {
   updateFinish,
   selectFinish

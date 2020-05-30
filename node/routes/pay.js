@@ -1,5 +1,5 @@
 const express = require('express');
-const { payCharge, selectPay, queryPayOff } = require('../controller/pay')
+const { payCharge, selectPay, insertCharge, queryPayOff } = require('../controller/pay')
 const { SuccessModel, ErrorModel } = require('../model/model')
 
 const router = express.Router()
@@ -23,6 +23,17 @@ router.post('/selectPay', (req, res, next) => {
       return
     }
     res.json(new ErrorModel('查询失败'))
+  })
+})
+
+router.post('/insertCharge', (req, res, next) => {
+  const { snumber, sname, pay } = req.body
+  insertCharge( snumber, sname, pay ).then(data => {
+    if(data){
+      res.json(new SuccessModel())
+      return
+    }
+    res.json(new ErrorModel('插入失败'))
   })
 })
 

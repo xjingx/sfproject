@@ -1,21 +1,36 @@
 const express = require('express');
-const { login,insertUser } = require('../controller/user')
+const { Studentslogin, Adminlogin, insertUser } = require('../controller/user')
 const { SuccessModel, ErrorModel } = require('../model/model')
 
 const router = express.Router()
 
 router.post('/login', (req, res, next) => {
-  const { snumber, spassword } = req.body
-  login(snumber, spassword).then(data => {
-    if (data[0]) {
-      console.log("成功")
-      console.log(data[0])
-      req.session.sname = data[0].sname
-      res.json(new SuccessModel(snumber,data[0].sname))
-      return
+  const { number, password, identity } = req.body
+  if (identity === 'students'){
+    Studentslogin(number, password).then(data => {
+        if (data[0]) {
+          console.log("成功")
+          req.session.number = data[0].snumber
+          req.session.name = data[0].sname
+          req.session.identity = 'student'
+          res.json(new SuccessModel(data[0],'student'))
+          return
+        }
+        res.json(new ErrorModel('登录失败'))
+    })
+    } else if (identity === 'admin'){
+      Adminlogin(number, password).then(data => {
+        if (data[0]) {
+          console.log("成功")
+          req.session.number = data[0].anumber
+          req.session.name = data[0].aname
+          req.session.identity = 'admin'
+          res.json(new SuccessModel(data[0],'admin'))
+          return
+        }
+        res.json(new ErrorModel('登录失败'))
+      })
     }
-    res.json(new ErrorModel('登录失败'))
-  })
 })
 
 router.get('/logout', function(req, res) {
@@ -29,11 +44,18 @@ router.get('/logout', function(req, res) {
 });
 
 router.get('/login-test', (req, res, next) => {
-  if (req.session.sname) {
-    res.json({
-      error: 0,
-      msg: '已登录'
-    })
+  if (req.session.name && req.session.number && req.session.identity) {
+    if (req.session.identity === 'student') {
+      res.json({
+        error: 0,
+        msg: 'student'
+      })
+    } else if (req.session.identity === 'admin') {
+      res.json({
+        error: 0,
+        msg: 'admin'
+      })
+    }
   } else {
     res.json({
       error: -1,

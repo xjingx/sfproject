@@ -21,6 +21,16 @@ selectPay = (snumber, sname) => {
           })
 }
 
+const insertCharge = (snumber, sname,pay) => {
+  return query($sqlQuery.insertchargeBySnumber, [snumber, sname, pay])
+         .catch(e => {
+              console.log('insert error', JSON.stringify(e));
+              return {
+                  errmsg: JSON.stringify(e)
+              }
+         })
+}
+
 queryPayOff = (snumber, sname) => {
   return query($sqlQuery.queryPayOffBysnumber, [snumber, sname])
           .catch(e => {
@@ -34,5 +44,6 @@ queryPayOff = (snumber, sname) => {
 module.exports = {
   payCharge,
   selectPay,
+  insertCharge,
   queryPayOff
 }

@@ -14,8 +14,8 @@
           <el-input type="password" v-model="formLogin.password" placeholder="密码"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-radio v-model="whologin" label="students" @change="consolelogin">学生</el-radio>
-          <el-radio v-model="whologin" label="admin" @change="consolelogin">管理员</el-radio>
+          <el-radio v-model="whologin" label="students">学生</el-radio>
+          <el-radio v-model="whologin" label="admin">管理员</el-radio>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="login">登录</el-button>
@@ -80,6 +80,7 @@ export default {
     };
   },
   mounted() {
+    console.log(this.whologin)
     document.onkeydown = event => {
       var router = this.$route.path;
       var e = event || window.event || arguments.callee.caller.arguments[0];
@@ -92,35 +93,40 @@ export default {
   },
   methods: {
     login() {
+      console.log(this.whologin)
       axios({
         method: "post",
         url: "/api/user/login",
         data: {
-          snumber: this.formLogin.loginName,
-          spassword: this.formLogin.password
+          number: this.formLogin.loginName,
+          password: this.formLogin.password,
+          identity: this.whologin
         }
       })
-        .then(response => {
-          console.log("成功报文:", response);
-          var json = response.data;
-          if (json.error == 0) {
-            localStorage.setItem("userName", json.message); //用户名
-            localStorage.setItem("userNumber", json.data); //学号
+      .then(response => {
+        console.log("成功报文:", response);
+        var json = response.data;
+        if (json.error == 0) {
+          if (json.message === "student"){
+            localStorage.setItem("userName", json.data.sname); //用户名
+            localStorage.setItem("userNumber", json.data.snumber); //学号
             this.$router.replace({ path: "/first" });
-          } else {
-            console.log("xx");
-            this.errorInfo.isShowError = true;
-            this.errorInfo.text = "登录失败";
+          } else if (json.message === 'admin') {
+            localStorage.setItem("userName", json.data.aname); //用户名
+            localStorage.setItem("userNumber", json.data.anumber); //学号
+            this.$router.replace({ path: "/admin" });
           }
-        })
-        .catch(error => {
-          console.log("失败报文:", error);
+        } else {
+          console.log("xx");
           this.errorInfo.isShowError = true;
           this.errorInfo.text = "登录失败";
-        });
-    },
-    consolelogin() {
-      console.log(this.whologin+"登录");
+        }
+      })
+      .catch(error => {
+        console.log("失败报文:", error);
+        this.errorInfo.isShowError = true;
+        this.errorInfo.text = "登录失败";
+      });
     },
     logincheck() {
       axios({
@@ -131,7 +137,12 @@ export default {
           var json = response.data;
           console.log(response);
           if (json.error == 0) {
-            this.$router.replace({ path: "/first" });
+            console.log(json.message)
+            if (json.msg === 'sutdent') {
+              this.$router.replace({ path: "/first" });
+            } else if (json.msg === 'admin') {
+              this.$router.replace({ path: "/admin" });
+            }
           } else {
             console.log("fail");
           }

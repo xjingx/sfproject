@@ -197,7 +197,6 @@ import Vue from 'vue'
 import { MessageBox } from 'element-ui'
 import axios from 'axios'
 export default {
-  name: 'Header',
   data(){
     return{
       addUser:{ //添加学生信息
@@ -235,7 +234,7 @@ export default {
         //addpw:''//密码
       },
       userIndex:0,
-      search: ''
+      search: {}
     }
   },
   methods:{
@@ -321,6 +320,8 @@ export default {
         console.log("res",res.data.error)
         if(res.data.error === 0){
           this.insertUser()
+          //this.insertCharge()
+          //this.insertCheckin()
           this.tableData.push(this.addUser)
           this.addUser=''
         }
@@ -364,7 +365,6 @@ export default {
     },
     confirm() {
       this.dialogVisible = false
-      //this.tableData[this.userIndex] = this.editUser  
       Vue.set(this.tableData,this.userIndex, this.editUser)
     },
     async insertUser() {
@@ -383,7 +383,44 @@ export default {
           console.log("insert user success", res.data)
         }
       })
-    }
+    },
+    async insertCharge() {
+      await axios({
+        method: 'post',
+        url: '/api/pay/insertCharge',
+        data: {
+          snumber: this.addUser.addsnumber,//学号
+          sname: this.addUser.addname,
+          pay: null,
+        }
+      })
+      .then(res => {
+        console.log("res",res.data.error)
+        if(res.data.error === 0){
+          console.log("insert charge success", res.data)
+        }
+      })
+    },
+    async insertCheckin() {
+      await axios({
+        method: 'post',
+        url: '/api/check/insertCheckin',
+        data: {
+          snumber: this.addUser.addsnumber,//学号
+          sname: this.addUser.addname,
+          active: 1,
+          finish: null,
+          department: this.addUser.adddepart,
+          major: this.addUser.addmajor,
+        }
+      })
+      .then(res => {
+        console.log("res",res.data.error)
+        if(res.data.error === 0){
+          console.log("insert checkin success", res.data)
+        }
+      })
+    },
   }
 }
 </script>
