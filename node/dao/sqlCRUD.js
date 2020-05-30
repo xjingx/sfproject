@@ -21,6 +21,7 @@ const user = {
   selectStudentInfo: "select snumber,sname,sidnumber,stestnumber,sdepartment,smajor,sbirthday,sgender from students",
   updateStudentsBySnumber: "update students set sname=?,sdepartment=?,smajor=?,stestnumber=?,sbirthday=?,sgender=? where snumber=?",
   deleteStudentsBySnumber: "delete from students where snumber=?",
+  deleteGreenInfo: "delete from greenchannel where snumber=?",
   updateFinishBysnumber: "update checkin set finish='true' where snumber=? and sname=?",
   queryPayOffBysnumber: "select tuition, hotelExpense, basicMedical, oneCard, administration, textbook from payoff where department in (select sdepartment from students where snumber=? and sname=?)",
   insertGreenChanneldk: "insert into greenchannel(snumber, sname, sclass, major, department, greentype, serialnumber, reason) values (?,?,?,?,?,?,?,?)",

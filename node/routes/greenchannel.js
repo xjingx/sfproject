@@ -1,5 +1,5 @@
 const express = require('express');
-const { insertGreenChanneldk, insertGreenChannelhj, queryGreenInfo } = require('../controller/greenchannel')
+const { insertGreenChanneldk, insertGreenChannelhj, queryGreenInfo, deleteGreenInfo } = require('../controller/greenchannel')
 const { SuccessModel, ErrorModel } = require('../model/model')
 
 const router = express.Router()
@@ -33,6 +33,17 @@ router.post('/queryGreenInfo', (req, res, next) => {
       return
     }
     res.json(new ErrorModel('查找失败'))
+  })
+})
+
+router.post('/deleteGreenInfo', (req, res, next) => {
+  const { snumber } = req.body
+  deleteGreenInfo(snumber).then(data => {
+    if(data){
+      res.json(new SuccessModel(data))
+      return
+    }
+    res.json(new ErrorModel('删除失败'))
   })
 })
 module.exports = router

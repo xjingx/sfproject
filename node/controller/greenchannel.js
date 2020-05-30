@@ -31,8 +31,19 @@ queryGreenInfo = () => {
            })
 }
 
+deleteGreenInfo = (snumber) => {
+  return query($sqlQuery.deleteGreenInfo, [snumber])
+           .catch(e => {
+             console.log('change error', JSON.stringify(e));
+             return {
+               errmsg: JSON.stringify(e)
+             }
+           })
+}
+
 module.exports = {
   insertGreenChanneldk,
   insertGreenChannelhj,
-  queryGreenInfo
+  queryGreenInfo,
+  deleteGreenInfo
 }
