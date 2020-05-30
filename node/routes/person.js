@@ -1,5 +1,13 @@
 const express = require('express');
-const { queryPersonInfo, changePersonInfo, insertPersonInfo, selectInfoFinish } = require('../controller/personInfo')
+const {
+  queryPersonInfo,
+  changePersonInfo,
+  insertPersonInfo,
+  selectInfoFinish,
+  selectStudentInfo,
+  updateStudents,
+  deleteStudents
+} = require('../controller/personInfo')
 const { SuccessModel, ErrorModel } = require('../model/model')
 
 const router = express.Router()
@@ -44,6 +52,38 @@ router.post('/selectInfoFinish', (req, res, next) => {
       return
     }
     res.json(new ErrorModel('查找失败'))
+  })
+})
+
+router.post('/selectStudentInfo', (req, res, next) => {
+  selectStudentInfo().then(data => {
+    if(data){
+      res.json(new SuccessModel(data))
+      return
+    }
+    res.json(new ErrorModel('查找失败'))
+  })
+})
+
+router.post('/updateStudents', (req, res, next) => {
+  const { snumber,sname,sdepartment,smajor,stestnumber,sbirthday,sgender } = req.body
+  updateStudents( snumber,sname,sdepartment,smajor,stestnumber,sbirthday,sgender ).then(data => {
+    if(data){
+      res.json(new SuccessModel())
+      return
+    }
+    res.json(new ErrorModel('更新失败'))
+  })
+})
+
+router.post('/deleteStudents', (req, res, next) => {
+  const { snumber } = req.body
+  deleteStudents( snumber ).then(data => {
+    if(data){
+      res.json(new SuccessModel())
+      return
+    }
+    res.json(new ErrorModel('更新失败'))
   })
 })
 module.exports = router

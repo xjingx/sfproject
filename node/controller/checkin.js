@@ -33,5 +33,6 @@ const insertCheckin = (snumber, sname, active, finish, department, major) => {
 
 module.exports = {
   updateFinish,
-  selectFinish
+  selectFinish,
+  insertCheckin
 }

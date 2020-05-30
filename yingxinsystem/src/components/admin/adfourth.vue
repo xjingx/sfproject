@@ -88,7 +88,7 @@
       <el-button class="add" type="primary" @click="add">一键添加</el-button>
       <!-- 下面是表格 -->
       <el-table
-        :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+        :data="tableData"
         style="width: 100%">
         <el-table-column
           fixed
@@ -158,11 +158,17 @@
         :before-close="handleClose">
         <div>
           <el-form ref="form" :model="editUser" label-width="40px">
-            <el-form-item label="姓名">
-              <el-input v-model="editUser.addname"></el-input>
-            </el-form-item>
             <el-form-item label="学号">
-              <el-input v-model="editUser.addsnumber"></el-input>
+              <el-input :placeholder="editUser.addsnumber" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="姓名">
+              <el-input v-model="editUser.addname" ></el-input>
+            </el-form-item>
+            <el-form-item label="学院">
+              <el-input v-model="editUser.adddepart"></el-input>
+            </el-form-item>
+            <el-form-item label="专业">
+              <el-input v-model="editUser.addmajor"></el-input>
             </el-form-item>
             <el-form-item label="性别">
               <el-select v-model="editUser.addsex" placeholder="请选择性别">
@@ -172,7 +178,7 @@
             </el-form-item>
             <el-form-item label="生日">
               <el-date-picker
-                v-model="editUser.time"
+                v-model="editUser.addbirthday"
                 type="date"
                 placeholder="请选择日期"
                 format="yyyy 年 MM 月 dd 日"
@@ -208,34 +214,32 @@ export default {
         addsnumber:'',//学号
         addidnumber:'',//身份证号
         adddepart:'',//学院
-        //addpw:''密码
       },
-      tableData: [{ //以下是固定的表格demo，之后可以取消
-        addname:'李海铭',
-        addtel:'17361019889',
-        addsex:'',
-        addbirthday:'',
-        addmajor:'软件工程',
-        addsnumber:'2017110321',
-        addidnumber:'510****************',
-        adddepart:'',
-        //addpw:'123456'
-      }],
+      tableData: [],
+      keyMap: {
+        'sname' : 'addname',
+        'stestnumber': 'addtel',
+        'sgender': 'addsex',
+        'sbirthday': 'addbirthday',
+        'smajor': 'addmajor',
+        'snumber': 'addsnumber',
+        'sidnumber': 'addidnumber',
+        'sdepartment': 'adddepart'
+      },
       dialogVisible: false, //编辑弹框显示
       editUser:{ //编辑学生部分信息没有做全部
-        addname:'',
-        addtel:'',//电话号码
+        adddepart:'',
+        addmajor:'',
         addsex:'',
         addbirthday:'',
-        //addmajor:'',
-        addsnumber:''//学号
-        //addidnumber:'',//身份证号
-        //adddepart:'',//学院
-        //addpw:''//密码
+        addsnumber:'',
+        addname: '',
+        addtel: ''
       },
-      userIndex:0,
-      search: {}
     }
+  },
+  mounted() {
+    this.selectStudentInfo()
   },
   methods:{
     async add(){
@@ -267,13 +271,6 @@ export default {
         });
         return;
       }
-      // if(!this.addUser.addpw){
-      //   this.$message({
-      //     message: '请设置密码',
-      //     type: 'warning'
-      //   });
-      //   return;
-      // }
       if(!this.addUser.adddepart){
         this.$message({
           message: '请选择所在学院',
@@ -320,10 +317,10 @@ export default {
         console.log("res",res.data.error)
         if(res.data.error === 0){
           this.insertUser()
-          //this.insertCharge()
-          //this.insertCheckin()
+          this.insertCharge()
+          this.insertCheckin()
           this.tableData.push(this.addUser)
-          this.addUser=''
+          this.addUser= {}
         }
       })
     },
@@ -333,7 +330,8 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.tableData.splice(idx,1)
+          //this.tableData.splice(idx,1)
+          this.deleteStudents(idx)
           this.$message({
             type: 'success',
             message: '删除成功!'
@@ -351,21 +349,19 @@ export default {
     edit(item,idx){
       this.userIndex = idx
       this.editUser = {
-        addname:item.addname,
-        addtel:item.addtel,
-        addsex:item.addsex,
-        addbirthday:item.addbirthday,
-        addidnumber:item.addidnumber,
-        addmajor:item.addmajor,
-        adddepart:item.adddepart,
-        //addpw:item.addpw,
-        addsnumber:item.addsnumber
+        addname: item.addname,
+        addsnumber: item.addsnumber,
+        adddepart: item.adddepart,
+        addmajor: item.addmajor,
+        addsex: item.addsex,
+        addbirthday: item.addbirthday,
+        addtel: item.addtel
       }
       this.dialogVisible = true
     },
     confirm() {
       this.dialogVisible = false
-      Vue.set(this.tableData,this.userIndex, this.editUser)
+      this.updateStudents()
     },
     async insertUser() {
       await axios({
@@ -421,6 +417,70 @@ export default {
         }
       })
     },
+    async selectStudentInfo() {
+      await axios({
+        method: 'post',
+        url: '/api/person/selectStudentInfo',
+      })
+      .then(res => {
+        console.log("res",res.data.error)
+        if(res.data.error === 0){
+          console.log("res",res.data.data)
+          let newArr = this.changeKey(res.data.data)
+          console.log("new",newArr)
+          this.tableData = newArr
+        }
+      })
+    },
+    async updateStudents() {
+      await axios({
+        method: 'post',
+        url: '/api/person/updateStudents',
+        data: {
+          sname: this.editUser.addname,
+          snumber: this.editUser.addsnumber,
+          sdepartment: this.editUser.adddepart,
+          smajor: this.editUser.addmajor,
+          sgender: this.editUser.addsex,
+          sbirthday: this.editUser.addbirthday,
+          stestnumber: this.editUser.addtel
+        }
+      })
+      .then(res => {
+        console.log("res",res.data.error)
+        if(res.data.error === 0){
+          console.log("select success", res.data)
+          this.selectStudentInfo()
+        }
+      })
+    },
+    async deleteStudents(idx) {
+      await axios({
+        method: 'post',
+        url: '/api/person/deleteStudents',
+        data: {
+          snumber: this.tableData[idx].addsnumber,
+        }
+      })
+      .then(res => {
+        console.log("res",res.data.error)
+        if(res.data.error === 0){
+          console.log("delete success", res.data)
+          this.selectStudentInfo()
+        }
+      })
+    },
+    changeKey(arr = []) {
+      let changeArr = arr.map(item => {
+        for(let key in item){
+          let newKey = this.keyMap[key]
+          item[newKey] = item[key]
+          delete item[key]
+        }
+        return item
+      })
+      return changeArr
+    }
   }
 }
 </script>

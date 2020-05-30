@@ -41,9 +41,42 @@ selectInfoFinish = () => {
            })
 }
 
+selectStudentInfo = () => {
+  return query($sqlQuery.selectStudentInfo)
+           .catch(e => {
+             console.log('select error', JSON.stringify(e));
+             return {
+               errmsg: JSON.stringify(e)
+             }
+           })
+}
+
+updateStudents = (snumber,sname,sdepartment,smajor,stestnumber,sbirthday,sgender) => {
+  return query($sqlQuery.updateStudentsBySnumber, [sname,sdepartment,smajor,stestnumber,sbirthday,sgender,snumber])
+           .catch(e => {
+             console.log('select error', JSON.stringify(e));
+             return {
+               errmsg: JSON.stringify(e)
+             }
+           })
+}
+
+deleteStudents = (snumber) => {
+  return query($sqlQuery.deleteStudentsBySnumber, [snumber])
+           .catch(e => {
+             console.log('select error', JSON.stringify(e));
+             return {
+               errmsg: JSON.stringify(e)
+             }
+           })
+}
+
 module.exports = {
   queryPersonInfo,
   changePersonInfo,
   insertPersonInfo,
-  selectInfoFinish
+  selectInfoFinish,
+  selectStudentInfo,
+  updateStudents,
+  deleteStudents
 }
