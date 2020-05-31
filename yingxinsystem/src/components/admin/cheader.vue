@@ -110,7 +110,7 @@ export default {
 <style lang="scss">
 ._header {
   padding: 0px;
-  background-color: #690099;
+  background-color: #339900;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
