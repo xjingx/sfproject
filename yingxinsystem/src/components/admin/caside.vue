@@ -80,6 +80,17 @@
 							title: "添加用户",
 							icon: "el-icon-star-off"
 						}]
+					},
+					{
+						icon: "el-icon-d-arrow-right", //侧栏第四项图标
+						path: "p_fifth",
+						title: "用户行为统计", //侧栏第四项名字
+						subs: [{
+							page: true,
+							path: "statistics",
+							title: "用户行为统计",
+							icon: "el-icon-d-arrow-right"
+						}]
 					}
 				]
 			};
