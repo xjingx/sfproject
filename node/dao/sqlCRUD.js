@@ -1,6 +1,6 @@
 // 用户相关的CRUD操作
 const user = {
-  queryAllInfo: 'select type,sname,title from information',
+  queryAllInfo: 'select type,sname,title,snumber from information',
   queryContent: 'select ncontent from notice where ntitle = ?',
   queryAllNotice: 'select ntitle from notice order by ntime desc',
   queryNotice: 'select * from (select ntitle,ncontent from notice order by ntime desc)as a limit 1',
@@ -8,7 +8,8 @@ const user = {
   queryBySnumber: 'select snumber,sname,sgender,stestnumber,sidnumber,sdepartment,smajor,sbirthday from students where snumber=? and sname=?',
   Studentslogin: 'select sname,snumber from user where snumber=? and spassword=?',
   Adminlogin: 'select aname,anumber from admin where anumber=? and apassword=?',
-  insertInfo: 'insert into information(title,type,object,sname,content) values (?,?,?,?,?)',
+  insertInfo: 'insert into information(title,type,object,sname,snumber,content) values (?,?,?,?,?,?)',
+  queryContent: 'select content from information where title=? and snumber=?',
   insertInfoBySnumber: 'insert into students(snumber, sname, sidnumber, stestnumber, sdepartment, smajor, sbirthday, sgender) values (?,?,?,?,?,?,?,?)',
   insertUserBySnumber: 'insert into user(snumber, spassword, sname) values (?,?,?)',
   insertchargeBySnumber: 'insert into charge(snumber, sname, pay) values (?,?,?)',

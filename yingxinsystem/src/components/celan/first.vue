@@ -120,12 +120,15 @@ export default {
           type: this.form.type,
           object: this.form.object,
           sname: localStorage.getItem("userName"),
+          snumber: localStorage.getItem("userNumber"),
           content: this.form.content
         }
       }).then(res => {
         console.log("res", res.data.error);
         if (res.data.error === 0) {
           alert("insert success");
+          this.queryInfo()
+          this.resetForm('form')
         }
       });
     },
@@ -141,8 +144,24 @@ export default {
         this.tableData = res;
       });
     },
-    opendialog1(index) {
-      this.DialogVisible = true;
+    async opendialog1(index) {
+      await axios({
+        method: 'post',
+        url: '/api/info/queryContent',
+        data: {
+          title: this.tableData[index].title,
+          snumber: this.tableData[index].snumber
+        }
+      })
+      .then(res => {
+        console.log("res",res.data.error)
+        if(res.data.error === 0){
+          this.DialogVisible = true;
+          console.log(res.data)
+          let content = res.data.data[0].content
+          this.dialog1.dialogmessage1 = content
+        }
+      })
     }
   }
 };
