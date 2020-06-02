@@ -57,6 +57,15 @@ const router = new Router({
             title: '添加用户',
             hideclose: true,
           }
+        },
+        {
+          path: '/statistics',
+          name: '用户行为统计',
+          component: () => import('@/components/admin/statistics.vue'),
+          meta: {
+            title: '用户行为统计',
+            hideclose: true,
+          }
         }
       ]
     },
@@ -73,24 +82,6 @@ const router = new Router({
           component: () => import('@/components/celan/first.vue'),
           meta: {
             title: '信息发布与查询',
-            hideclose: true,
-          }
-        },
-        {
-          name: 'more',
-          path: '/more',
-          component: () => import('@/components/celan/more.vue'),
-          meta: {
-            title: '更多',
-            hideclose: true,
-          }
-        },
-        {
-          name: 'chakan',
-          path: '/chakan',
-          component: () => import('@/components/celan/chakan.vue'),
-          meta: {
-            title: '查看',
             hideclose: true,
           }
         },

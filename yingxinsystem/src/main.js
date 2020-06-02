@@ -34,7 +34,8 @@ Vue.use(Vuex)
 import moment from 'moment'
 Vue.prototype.$moment=moment;//设置到vue原型属性,调用方式this.$moment(date).format("YYYY-MM-DD HH:mm:ss");
 
-
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
 //包引用------end
 
 /* eslint-disable no-new */
