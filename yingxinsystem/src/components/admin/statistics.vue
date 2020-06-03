@@ -14,12 +14,16 @@ export default {
     return {
       //这个数组表示的是第一个图浏览量的数据，从后台获取，这里是demo
       pageview: [
-        1,2,3,4,5,6
-      ]
+        3,2,3,4,5,6
+      ],
+      tableData: [],
+      tableName: ["信息发布与查询", "信息与公告", "个人信息", "报到进度", "绿色通道", "财务缴费"]
     };
   },
-  mounted() {
-    this.drawLine();
+  async mounted() {
+    await this.queryVisitedNumber()
+    await this.queryVisitedTime()
+    this.drawLine();  
   },
   methods: {
     drawLine() {
@@ -32,14 +36,7 @@ export default {
         tooltip: {},
         xAxis: {
           //这个data里面的东西就是定死的 因为 页面只有那几个
-          data: [
-            "信息发布与查询",
-            "信息与公告",
-            "个人信息",
-            "报到进度",
-            "绿色通道",
-            "财务缴费"
-          ]
+          data: this.tableName
         },
         yAxis: {},
         series: [
@@ -62,18 +59,11 @@ export default {
             type: "pie", // 设置图表类型为饼图
             radius: "65%", // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
             roseType: "angle",
-            data: [
-              //数据数组，name 为数据项名称，value 为数据项值
-              { value: 235, name: "信息发布与查询" },
-              { value: 274, name: "信息与公告" },
-              { value: 310, name: "个人信息" },
-              { value: 335, name: "报到进度" },
-              { value: 400, name: "绿色通道" },
-              { value: 400, name: "财务缴费" }
-            ]
+            data: this.tableData
           }
         ]
       });
+
       //饼状图请求demo，柱状图的没有写，因为饼状图必须是value-name形式 而柱状图只需要一组数据就行了
       //就相当于柱状图没有写在请求里面，这个网上的实例饼状图是直接写在请求里面的
       /*axios
@@ -121,7 +111,48 @@ export default {
             ]
           });
         });*/
-    }
+    },
+    async queryVisitedNumber() {
+      await axios({
+        method: "post",
+        url: "/api/visit/selectVisitedNumber",
+      }).then(res => {
+        console.log("res", res.data.error);
+        if (res.data.error === 0) {
+          let arr = []
+          arr = Object.keys(res.data.data[0]).map(item => {
+            return res.data.data[0][item]
+          })
+          this.pageview = arr
+        } else {
+          console.log('获取失败')
+        }
+      });
+    },
+    async queryVisitedTime() {
+      await axios({
+        method: "post",
+        url: "/api/time/selectVisitedTime",
+      }).then(res => {
+        console.log("res", res.data.error);
+        if (res.data.error === 0) {
+          let arr = []
+          let data = []
+          arr = Object.keys(res.data.data[0]).map(item => {
+            return res.data.data[0][item]
+          })
+          for (let i=0;i<arr.length;i++) {
+            data[i] = {
+              value: arr[i],
+              name: this.tableName[i]
+            }
+          }
+          this.tableData = data
+        } else {
+          console.log('获取失败')
+        }
+      });
+    },
   }
 };
 </script>

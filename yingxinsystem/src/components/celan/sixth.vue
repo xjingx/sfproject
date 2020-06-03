@@ -177,13 +177,22 @@ export default {
         oneCard: 0,
         administration: 0,
       },
-      payoff: true
+      payoff: true,
+      beginTime: 0,
+      endTime: 0,
+      countTime: 0,
     };
   },
   async mounted() {
+    this.beginTime = Date.now() / 1000
     await this.queryPayOff()
     await this.queryCharge()
     this.updateVisited()
+  },
+  beforeDestroy() {
+    this.endTime = Date.now() / 1000
+    this.countTime = this.endTime - this.beginTime
+    this.updateTime()
   },
   methods: {
     async queryPayOff() {
@@ -244,6 +253,25 @@ export default {
         method: "post",
         url: "/api/visit/updatesixthVisitedNumber"
       }) //接口
+      .then(res => {
+        if(res.data.error === 0){
+          console.log("success")
+        }
+      })
+    },
+    updateTime() {
+      axios({
+        method: "post",
+        url: "/api/time/updatesixthVisitedTime",
+        data: {
+          countTime: this.countTime
+        }
+      }) //接口
+      .then(res => {
+        if(res.data.error === 0){
+          console.log("success")
+        }
+      })
     },
   }
 };

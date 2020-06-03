@@ -104,12 +104,21 @@ export default {
       //弹出框显示具体通知
       dialog1: {
         dialogmessage1: "132456"
-      }
+      },
+      beginTime: 0,
+      endTime: 0,
+      countTime: 0,
     };
   },
   mounted() {
+    this.beginTime = Date.now() / 1000
     this.queryInfo();
     this.updateVisited();
+  },
+  beforeDestroy() {
+    this.endTime = Date.now() / 1000
+    this.countTime = this.endTime - this.beginTime
+    this.updateTime()
   },
   methods: {
     submitForm(formName) {
@@ -155,7 +164,6 @@ export default {
         }
       })
       .then(res => {
-        console.log("res",res.data.error)
         if(res.data.error === 0){
           this.DialogVisible = true;
           console.log(res.data)
@@ -169,6 +177,25 @@ export default {
         method: "post",
         url: "/api/visit/updatefirstVisitedNumber"
       }) //接口
+      .then(res => {
+        if(res.data.error === 0){
+          console.log("success")
+        }
+      })
+    },
+    updateTime() {
+      axios({
+        method: "post",
+        url: "/api/time/updatefirstVisitedTime",
+        data: {
+          countTime: this.countTime
+        }
+      }) //接口
+      .then(res => {
+        if(res.data.error === 0){
+          console.log("success")
+        }
+      })
     },
   }
 };

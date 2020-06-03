@@ -38,9 +38,20 @@ const stastics = {
   updatefourthVisitedNumber: "update visitednumber set fourth=1+fourth where id=1",
   updatefifthVisitedNumber: "update visitednumber set fifth=1+fifth where id=1",
   updatesixthVisitedNumber: "update visitednumber set sixth=1+sixth where id=1",
-  selectVisitedNumber: "select login,first,second,third,fourth,fifth,sixth from visitednumber where id=1"
+  selectVisitedNumber: "select first,second,third,fourth,fifth,sixth from visitednumber where id=1"
+}
+
+const time = {
+  updatefirstVisitedTime: "update visitedtime set first=?+first where id=1",
+  updatesecondVisitedTime: "update visitedtime set second=?+second where id=1",
+  updatethirdVisitedTime: "update visitedtime set third=?+third where id=1",
+  updatefourthVisitedTime: "update visitedtime set fourth=?+fourth where id=1",
+  updatefifthVisitedTime: "update visitedtime set fifth=?+fifth where id=1",
+  updatesixthVisitedTime: "update visitedtime set sixth=?+sixth where id=1",
+  selectVisitedTime: "select first,second,third,fourth,fifth,sixth from visitedtime where id=1"
 }
 module.exports = {
   user,
-  stastics
+  stastics,
+  time
 }

@@ -90,7 +90,6 @@ export default {
       }
     };
     this.logincheck();
-    this.updateVisited()
   },
   methods: {
     login() {

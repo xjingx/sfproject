@@ -21,13 +21,22 @@ import axios from 'axios'
       return {
         active: 1,
         msg: "下一步",
-        pay: null
+        pay: null,
+        beginTime: 0,
+        endTime: 0,
+        countTime: 0,
       };
     },
     mounted() {
+      this.beginTime = Date.now() / 1000
       this.selectFinish()
       this.selectPay()
       this.updateVisited()
+    },
+    beforeDestroy() {
+      this.endTime = Date.now() / 1000
+      this.countTime = this.endTime - this.beginTime
+      this.updateTime()
     },
     methods: {
       next() {
@@ -101,7 +110,26 @@ import axios from 'axios'
         method: "post",
         url: "/api/visit/updatefourthVisitedNumber"
       }) //接口
-    },    
+      .then(res => {
+        if(res.data.error === 0){
+          console.log("success")
+        }
+      })
+    },
+    updateTime() {
+      axios({
+        method: "post",
+        url: "/api/time/updatefourthVisitedTime",
+        data: {
+          countTime: this.countTime
+        }
+      }) //接口
+      .then(res => {
+        if(res.data.error === 0){
+          console.log("success")
+        }
+      })
+    },   
   }
 }
 </script>

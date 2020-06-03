@@ -19,6 +19,7 @@ let checkRouter = require('./routes/checkin');
 let noticeRouter = require('./routes/notice');
 let greenRouter = require('./routes/greenchannel')
 let visitedRouter = require('./routes/visited')
+let timeRouter = require('./routes/time')
 
 // 设置跨域访问
 /*app.use("*", (req, res, next) => {
@@ -75,6 +76,7 @@ app.use('/api/check', checkRouter);
 app.use('/api/notice', noticeRouter);
 app.use('/api/green', greenRouter);
 app.use('/api/visit', visitedRouter)
+app.use('/api/time', timeRouter)
 
 app.use(function (req, res, next) {
   next(createError(404));

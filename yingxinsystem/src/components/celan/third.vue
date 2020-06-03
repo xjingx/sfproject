@@ -85,12 +85,21 @@ import axios from 'axios'
           sdepartment:'',
           smajor:'',
           sbirthday:''      
-        }
+        },
+        beginTime: 0,
+        endTime: 0,
+        countTime: 0,
       }
     },
     mounted() {
+      this.beginTime = Date.now() / 1000
       this.queryInfo();
       this.updateVisited()
+    },
+    beforeDestroy() {
+      this.endTime = Date.now() / 1000
+      this.countTime = this.endTime - this.beginTime
+      this.updateTime()
     },
     methods: {
       queryInfo() {
@@ -145,6 +154,25 @@ import axios from 'axios'
           method: "post",
           url: "/api/visit/updatethirdVisitedNumber"
         }) //接口
+        .then(res => {
+        if(res.data.error === 0){
+          console.log("success")
+        }
+      })
+      },
+      updateTime() {
+        axios({
+          method: "post",
+          url: "/api/time/updatethirdVisitedTime",
+          data: {
+            countTime: this.countTime
+          }
+        }) //接口
+        .then(res => {
+        if(res.data.error === 0){
+          console.log("success")
+        }
+      })
       },
     }
   }

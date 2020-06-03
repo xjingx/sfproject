@@ -175,11 +175,20 @@ export default {
             trigger: "change"
           }
         ]
-      }
+      },
+      beginTime: 0,
+      endTime: 0,
+      countTime: 0,
     };
   },
   mounted() {
+    this.beginTime = Date.now() / 1000
     this.updateVisited()
+  },
+  beforeDestroy() {
+    this.endTime = Date.now() / 1000
+    this.countTime = this.endTime - this.beginTime
+    this.updateTime()
   },
   methods: {
     toggle1() {
@@ -263,6 +272,25 @@ export default {
         method: "post",
         url: "/api/visit/updatefifthVisitedNumber"
       }) //接口
+      .then(res => {
+        if(res.data.error === 0){
+          console.log("success")
+        }
+      })
+    },
+    updateTime() {
+      axios({
+        method: "post",
+        url: "/api/time/updatefifthVisitedTime",
+        data: {
+          countTime: this.countTime
+        }
+      }) //接口
+      .then(res => {
+        if(res.data.error === 0){
+          console.log("success")
+        }
+      })
     },
   }
 };
