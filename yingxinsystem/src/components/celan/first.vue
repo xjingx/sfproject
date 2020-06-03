@@ -109,6 +109,7 @@ export default {
   },
   mounted() {
     this.queryInfo();
+    this.updateVisited();
   },
   methods: {
     submitForm(formName) {
@@ -162,7 +163,13 @@ export default {
           this.dialog1.dialogmessage1 = content
         }
       })
-    }
+    },
+    updateVisited() {
+      axios({
+        method: "post",
+        url: "/api/visit/updatefirstVisitedNumber"
+      }) //接口
+    },
   }
 };
 </script>

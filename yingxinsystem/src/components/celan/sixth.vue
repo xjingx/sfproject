@@ -183,6 +183,7 @@ export default {
   async mounted() {
     await this.queryPayOff()
     await this.queryCharge()
+    this.updateVisited()
   },
   methods: {
     async queryPayOff() {
@@ -237,7 +238,13 @@ export default {
           this.hasPayOff = this.payOff
         }
       });
-    }
+    },
+    updateVisited() {
+      axios({
+        method: "post",
+        url: "/api/visit/updatesixthVisitedNumber"
+      }) //接口
+    },
   }
 };
 </script>

@@ -89,7 +89,8 @@ import axios from 'axios'
       }
     },
     mounted() {
-      this.queryInfo()
+      this.queryInfo();
+      this.updateVisited()
     },
     methods: {
       queryInfo() {
@@ -138,7 +139,13 @@ import axios from 'axios'
         this.form.stestnumber = this.userinfo.stestnumber
         this.form.sidnumber = this.userinfo.sidnumber
         this.form.sbirthday = this.userinfo.sbirthday        
-      }
+      },
+      updateVisited() {
+        axios({
+          method: "post",
+          url: "/api/visit/updatethirdVisitedNumber"
+        }) //接口
+      },
     }
   }
 </script>

@@ -59,7 +59,8 @@ export default {
   },
   mounted() {
     this.queryNotice();
-    this.queryAllNotice()
+    this.queryAllNotice();
+    this.updateVisited()
   },
   methods: {
     async openDialog(index) {
@@ -102,6 +103,12 @@ export default {
           this.notice = res.data.data
         }
       })
+    },
+    updateVisited() {
+      axios({
+        method: "post",
+        url: "/api/visit/updatesecondVisitedNumber"
+      }) //接口
     },
   }
 };

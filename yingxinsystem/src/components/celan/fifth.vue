@@ -178,7 +178,9 @@ export default {
       }
     };
   },
-
+  mounted() {
+    this.updateVisited()
+  },
   methods: {
     toggle1() {
       //点击事件函数
@@ -255,7 +257,13 @@ export default {
       this.$refs[formName].resetFields();
       this.flag1 = false;
       this.flag2 = false;
-    }
+    },
+    updateVisited() {
+      axios({
+        method: "post",
+        url: "/api/visit/updatefifthVisitedNumber"
+      }) //接口
+    },
   }
 };
 </script>

@@ -27,6 +27,7 @@ import axios from 'axios'
     mounted() {
       this.selectFinish()
       this.selectPay()
+      this.updateVisited()
     },
     methods: {
       next() {
@@ -94,7 +95,13 @@ import axios from 'axios'
           this.active = 4
         }
       })
-    },       
+    },
+    updateVisited() {
+      axios({
+        method: "post",
+        url: "/api/visit/updatefourthVisitedNumber"
+      }) //接口
+    },    
   }
 }
 </script>

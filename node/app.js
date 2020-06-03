@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const FileStreamRotator = require('file-stream-rotator')
 const session = require('express-session');
 let RedisStore = require('connect-redis')(session);
 let redisClient = require('./dao/redis');
@@ -17,6 +18,7 @@ let payRouter = require('./routes/pay');
 let checkRouter = require('./routes/checkin');
 let noticeRouter = require('./routes/notice');
 let greenRouter = require('./routes/greenchannel')
+let visitedRouter = require('./routes/visited')
 
 // 设置跨域访问
 /*app.use("*", (req, res, next) => {
@@ -27,13 +29,22 @@ let greenRouter = require('./routes/greenchannel')
   next();
 });*/
 
-const logFileName = path.join(__dirname, 'logs', 'access.log')
-const writeStream = fs.createWriteStream(logFileName, {
-  flags: 'a'
+const logFileName = path.join(__dirname, 'logs')
+const accessLogStream = FileStreamRotator.getStream({
+  date_format: 'YYYYMMDD',
+  filename: path.join(logFileName, 'access.log'),
+  frequency: 'daily',
+  verbose: false
 })
+logger.token('localDate',function getDate(res){
+  let date = new Date()
+  return date.toLocaleString()
+})
+logger.format('combined', ':remote-addr - :remote-user [:localDate] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"')
 app.use(logger('combined', {
-  stream: writeStream
+  stream: accessLogStream
 }))
+
 
 app.use(session({
   secret: 'Xam_is195#*^0',
@@ -63,6 +74,7 @@ app.use('/api/pay', payRouter);
 app.use('/api/check', checkRouter);
 app.use('/api/notice', noticeRouter);
 app.use('/api/green', greenRouter);
+app.use('/api/visit', visitedRouter)
 
 app.use(function (req, res, next) {
   next(createError(404));

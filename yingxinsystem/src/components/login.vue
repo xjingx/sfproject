@@ -90,6 +90,7 @@ export default {
       }
     };
     this.logincheck();
+    this.updateVisited()
   },
   methods: {
     login() {
@@ -133,24 +134,30 @@ export default {
         method: "get",
         url: "/api/user/login-test"
       }) //接口
-        .then(response => {
-          var json = response.data;
-          console.log(response);
-          if (json.error == 0) {
-            console.log(json.message)
-            if (json.msg === 'sutdent') {
-              this.$router.replace({ path: "/first" });
-            } else if (json.msg === 'admin') {
-              this.$router.replace({ path: "/admin" });
-            }
-          } else {
-            console.log("fail");
+      .then(response => {
+        var json = response.data;
+        console.log(response);
+        if (json.error == 0) {
+          if (json.msg === 'student') {
+            console.log('success')
+            this.$router.replace({ path: "/first" });
+          } else if (json.msg === 'admin') {
+            this.$router.replace({ path: "/admin" });
           }
-        })
-        .catch(error => {
-          console.log("失败报文:", error);
-        });
-    }
+        } else {
+          console.log("fail");
+        }
+      })
+      .catch(error => {
+        console.log("失败报文:", error);
+      });
+    },
+    updateVisited() {
+      axios({
+        method: "post",
+        url: "/api/visit/updateLoginVisitedNumber"
+      }) //接口
+    },
   }
-};
+}
 </script>

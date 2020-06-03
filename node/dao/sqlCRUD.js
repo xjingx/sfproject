@@ -30,6 +30,17 @@ const user = {
   queryGreenInfo: "select snumber,sname,sclass,major,department,greentype,serialnumber,delaymoney,delaydate,reason from greenchannel"
 };
 
+const stastics = {
+  updateLoginVisitedNumber: "update visitednumber set login=1+login where id=1",
+  updatefirstVisitedNumber: "update visitednumber set first=1+first where id=1",
+  updatesecondVisitedNumber: "update visitednumber set second=1+second where id=1",
+  updatethirdVisitedNumber: "update visitednumber set third=1+third where id=1",
+  updatefourthVisitedNumber: "update visitednumber set fourth=1+fourth where id=1",
+  updatefifthVisitedNumber: "update visitednumber set fifth=1+fifth where id=1",
+  updatesixthVisitedNumber: "update visitednumber set sixth=1+sixth where id=1",
+  selectVisitedNumber: "select login,first,second,third,fourth,fifth,sixth from visitednumber where id=1"
+}
 module.exports = {
-  user
+  user,
+  stastics
 }
