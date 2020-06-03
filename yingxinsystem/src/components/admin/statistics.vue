@@ -12,7 +12,7 @@ let echarts = require("echarts/lib/echarts");
 export default {
   data() {
     return {
-      //这个数组从后台获取这里是demo
+      //这个数组表示的是第一个图浏览量的数据，从后台获取，这里是demo
       pageview: [
         1,2,3,4,5,6
       ]
@@ -25,12 +25,13 @@ export default {
     drawLine() {
       // pv是页面浏览量
       var pv = echarts.init(document.getElementById("myChart"));
-      var mychart = echarts.init(document.getElementById("main"));
+      var mychart = echarts.init(document.getElementById("main"));//页面停留时间
       // 绘制图表
       pv.setOption({
         title: { text: "页面浏览量统计" },
         tooltip: {},
         xAxis: {
+          //这个data里面的东西就是定死的 因为 页面只有那几个
           data: [
             "信息发布与查询",
             "信息与公告",
@@ -45,31 +46,36 @@ export default {
           {
             name: "人数",
             type: "bar",
-            data: []//
+            data: this.pageview//这里就是显示出来的数据（浏览量）
           }
         ]
       });
+
+
+      //下面的请求里面包含了这一部分到时候请求写好了就可以删了
       mychart.setOption({
-        title: { text: "" },
+        title: { text: "页面停留时间" },
         tooltip: {},
         series: [
           {
-            name: "访问来源",
+            name: "秒",
             type: "pie", // 设置图表类型为饼图
             radius: "65%", // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
             roseType: "angle",
             data: [
               //数据数组，name 为数据项名称，value 为数据项值
-              { value: 235, name: "视频广告" },
-              { value: 274, name: "联盟广告" },
-              { value: 310, name: "邮件营销" },
-              { value: 335, name: "直接访问" },
-              { value: 400, name: "搜索引擎" }
+              { value: 235, name: "信息发布与查询" },
+              { value: 274, name: "信息与公告" },
+              { value: 310, name: "个人信息" },
+              { value: 335, name: "报到进度" },
+              { value: 400, name: "绿色通道" },
+              { value: 400, name: "财务缴费" }
             ]
           }
         ]
       });
-      //请求demo
+      //饼状图请求demo，柱状图的没有写，因为饼状图必须是value-name形式 而柱状图只需要一组数据就行了
+      //就相当于柱状图没有写在请求里面，这个网上的实例饼状图是直接写在请求里面的
       /*axios
         .get(
           "" //请求url
