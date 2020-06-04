@@ -126,17 +126,17 @@ export default {
         reason: "", //申请原因
       },
       rules: {
-        sno: [
+        snumber: [
           { required: true, message: "请输入学号", trigger: "blur" },
           { min: 10, max: 10, message: "长度为10个字符", trigger: "blur" }
         ],
 
-        name: [
+        sname: [
           { required: true, message: "请输入姓名", trigger: "blur" },
           { min: 2, max: 10, message: "长度为2到10个字符", trigger: blur }
         ],
 
-        class: [
+        sclass: [
           { required: true, message: "请输入班级", trigger: "blur" },
           { min: 7, max: 7, message: "长度为7个字符", trigger: blur }
         ],
@@ -146,28 +146,28 @@ export default {
           { min: 1, max: 15, message: "长度为1到15个字符", trigger: blur }
         ],
 
-        collge: [
+        department: [
           { required: true, message: "请输入学院", trigger: "blur" },
           { min: 1, max: 15, message: "长度为1到15个字符", trigger: blur }
         ],
 
-        region: [
+        greentype: [
           { required: true, message: "请选择绿色通道类别", trigger: "change" }
         ],
 
-        money1: [
+        delaymoney: [
           { required: true, message: "请输入金额" },
           { type: "number", message: "金额必须为数字" }
         ],
 
-        number: [
+        serialnumber: [
           { required: true, message: "请输入贷款编号", trigger: "blur" },
           { min: 1, max: 15, message: "长度为1到15个字符", trigger: blur }
         ],
 
         reason: [{ required: true, message: "请输入原因", trigger: "blur" }],
 
-        date: [
+        delaydate: [
           {
             type: "date",
             required: true,
