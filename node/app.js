@@ -10,6 +10,8 @@ const FileStreamRotator = require('file-stream-rotator')
 const session = require('express-session');
 let RedisStore = require('connect-redis')(session);
 let redisClient = require('./dao/redis');
+const searchData = require('./search');
+const elasticsearch = require('elasticsearch');
 
 let userRouter = require('./routes/user');
 let personRouter = require('./routes/person');
@@ -32,6 +34,49 @@ const $sqlQuery = require('./dao/sqlCRUD').logger;
   res.header("Content-Type", "application/json;charset=utf-8");
   next();
 });*/
+
+const client = new elasticsearch.Client({
+  host: '127.0.0.1:9200',
+  log: 'error'
+});
+client.ping({ requestTimeout: 30000 }, function(error) {
+  if (error) {
+      console.error('elasticsearch cluster is down!');
+  } else {
+      console.log('Everything is ok');
+  }
+});
+const bulkIndex = function bulkIndex(index, type, data) {
+  let bulkBody = [];
+
+  data.forEach(item => {
+      bulkBody.push({
+          index: {
+              _index: index,
+              _type: type,
+              _id: item.id
+          }
+      });
+
+      bulkBody.push(item);
+  });
+  client.bulk({body: bulkBody})
+      .then(response => {
+          let errorCount = 0;
+          response.items.forEach(item => {
+              if (item.index && item.index.error) {
+                  console.log(++errorCount, item.index.error);
+              }
+          });
+          console.log(
+              `Successfully indexed ${data.length - errorCount}
+       out of ${data.length} items`
+          );
+      })
+      .catch(console.err);
+};
+//searchData();
+
 
 const logFileName = path.join(__dirname, 'logs')
 const accessLogStream = {
