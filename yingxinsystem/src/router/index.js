@@ -66,6 +66,15 @@ const router = new Router({
             title: '用户行为统计',
             hideclose: true,
           }
+        },
+        {
+          path: '/search',
+          name: '全文搜索',
+          component: () => import('@/components/admin/search.vue'),
+          meta: {
+            title: '全文搜索',
+            hideclose: true,
+          }
         }
       ]
     },

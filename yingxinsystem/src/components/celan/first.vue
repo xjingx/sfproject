@@ -5,7 +5,7 @@
     <div class="yemian">
       <el-carousel :autoplay="false" interval="4000" type="card" height="500px">
         <el-carousel-item>
-          <div class="first">
+          <div class="firstbox">
             <el-form ref="form" :model="form" label-width="80px" :rules="firstrules">
               <el-form-item>
                 <p style="color: #aa55ff; font-size: x-large; margin-left:30%;">信息发布</p>
@@ -43,7 +43,7 @@
         </el-carousel-item>
         <el-carousel-item>
           <p style="color: #aa55ff; font-size: x-large; margin-left:40%;margin-top: 10px;">已发布信息</p>
-          <div class="second">
+          <div class="secondbox">
             <el-table :data="tableData" height="400" border style="width: 100%">
               <el-table-column type="index"></el-table-column>
               <el-table-column prop="type" label="信息类型" width="130"></el-table-column>
@@ -212,7 +212,7 @@ export default {
 .yemian {
   margin-top: 8%;
 }
-.first {
+.firstbox {
   margin-top: 5%;
   margin: 8px;
 }
@@ -221,7 +221,7 @@ export default {
   font-size: x-large;
   color: #0056b3;
 }
-.second {
+.secondbox {
   margin: 10px;
 }
 </style>

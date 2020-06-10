@@ -91,6 +91,17 @@
 							title: "用户行为统计",
 							icon: "el-icon-d-arrow-right"
 						}]
+					},
+					{
+						icon: "el-icon-search", //侧栏第四项图标
+						path: "p_sixth",
+						title: "全文搜索", //侧栏第四项名字
+						subs: [{
+							page: true,
+							path: "search",
+							title: "全文搜索",
+							icon: "el-icon-search"
+						}]
 					}
 				]
 			};
