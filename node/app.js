@@ -21,6 +21,9 @@ let greenRouter = require('./routes/greenchannel')
 let visitedRouter = require('./routes/visited')
 let timeRouter = require('./routes/time')
 
+const query= require('./dao/query').query;
+const $sqlQuery = require('./dao/sqlCRUD').logger;
+
 // 设置跨域访问
 /*app.use("*", (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -31,12 +34,22 @@ let timeRouter = require('./routes/time')
 });*/
 
 const logFileName = path.join(__dirname, 'logs')
-const accessLogStream = FileStreamRotator.getStream({
+const accessLogStream = {
   date_format: 'YYYYMMDD',
   filename: path.join(logFileName, 'access.log'),
   frequency: 'daily',
-  verbose: false
-})
+  verbose: false,
+  write(line) {
+    console.log('line',line)
+    query($sqlQuery.insertLogger, [line])
+      .catch(e => {
+          console.log('select error', JSON.stringify(e));
+          return {
+              errmsg: JSON.stringify(e)
+          }
+      })
+  }
+}
 logger.token('localDate',function getDate(res){
   let date = new Date()
   return date.toLocaleString()
