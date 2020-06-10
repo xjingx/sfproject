@@ -41,12 +41,15 @@ export default {
     inquire() {
       var body = '{"query": {"match_all": {}}}'
       console.log(this.query);
-      axios
-        .post("http://localhost:9200/swproject_db/_search" + this.body)
-        .then((res)=>{
-    console.log(res.data.hits.hits);
-    this.resluts = res.data.hits.hits;
-  })
+      axios({
+        method: 'post',
+        url: 'http://localhost:9200/admin/_search',
+        data: body
+      })  
+      .then((res)=>{
+        console.log(res.data.hits.hits);
+        this.resluts = res.data.hits.hits;
+      })
     },
     indexMethod(index) {
       return index + 1;
