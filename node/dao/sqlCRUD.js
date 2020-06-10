@@ -50,8 +50,13 @@ const time = {
   updatesixthVisitedTime: "update visitedtime set sixth=?+sixth where id=1",
   selectVisitedTime: "select first,second,third,fourth,fifth,sixth from visitedtime where id=1"
 }
+
+const logger = {
+  insertLogger: "insert into logger(content) values (?)"
+}
 module.exports = {
   user,
   stastics,
-  time
+  time,
+  logger
 }
